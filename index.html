@@ -43,6 +43,16 @@
               });
             }
           } catch (_) {}
+
+          // Suppress benign reduced-motion diagnostic warnings from animation engines
+          var originalWarn = console.warn;
+          console.warn = function() {
+            var msg = arguments[0];
+            if (typeof msg === 'string' && msg.indexOf('Reduced Motion enabled') !== -1) {
+              return;
+            }
+            return originalWarn.apply(console, arguments);
+          };
         } catch (_) {}
       })();
     </script>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion, useReducedMotion } from 'motion/react';
 import { ArrowUpRight, Check, ArrowRight } from 'lucide-react';
 import { Button } from './ui/Button';
 import { AQBCStep } from './ui/AQBCStep';
@@ -9,8 +8,6 @@ interface AQBCSectionProps {
 }
 
 export const AQBCSection: React.FC<AQBCSectionProps> = ({ onQualifyClick }) => {
-  const shouldReduceMotion = useReducedMotion();
-
   const steps = [
     {
       number: '01',
@@ -104,12 +101,9 @@ export const AQBCSection: React.FC<AQBCSectionProps> = ({ onQualifyClick }) => {
         {/* THE 4-STEP SYSTEM */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 relative">
           {steps.map((step, idx) => (
-            <motion.div
+            <div
               key={step.number}
-              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.35, delay: idx * 0.1, ease: 'easeOut' }}
+              className="transition-transform duration-300 ease-out"
             >
               <AQBCStep
                 number={step.number}
@@ -118,7 +112,7 @@ export const AQBCSection: React.FC<AQBCSectionProps> = ({ onQualifyClick }) => {
                 mechanism={step.mechanism}
                 isLast={idx === steps.length - 1}
               />
-            </motion.div>
+            </div>
           ))}
         </div>
 

@@ -14,6 +14,14 @@
         },
       });
     }
+
+    const originalWarn = console.warn;
+    console.warn = (...args: unknown[]) => {
+      if (typeof args[0] === 'string' && args[0].includes('Reduced Motion enabled')) {
+        return;
+      }
+      originalWarn.apply(console, args);
+    };
   } catch (_) {}
 })();
 
