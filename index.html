@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oglity</title>
+    <meta name="description" content="Specialist customer-acquisition partner and AQBC system for premium PPF and ceramic coating studios selling ₹50K+ packages." />
+    <meta property="og:title" content="Oglity" />
+    <meta property="og:description" content="Specialist customer-acquisition partner and AQBC system for premium PPF and ceramic coating studios selling ₹50K+ packages." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      // Ensure window.fetch has both a getter and setter to prevent "Cannot set property fetch of #<Window> which has only a getter" errors in extension and test executor environments
+      (function() {
+        try {
+          var nativeFetch = window.fetch;
+          var _currentFetch = function() {
+            return nativeFetch ? nativeFetch.apply(window, arguments) : Promise.resolve(new Response());
+          };
+          var fetchGetter = function() {
+            return _currentFetch;
+          };
+          var fetchSetter = function(fn) {
+            _currentFetch = fn;
+          };
+
+          try {
+            Object.defineProperty(window, 'fetch', {
+              configurable: true,
+              enumerable: true,
+              get: fetchGetter,
+              set: fetchSetter
+            });
+          } catch (_) {}
+
+          try {
+            if (typeof Window !== 'undefined' && Window.prototype) {
+              Object.defineProperty(Window.prototype, 'fetch', {
+                configurable: true,
+                enumerable: true,
+                get: fetchGetter,
+                set: fetchSetter
+              });
+            }
+          } catch (_) {}
+        } catch (_) {}
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-[#111315] text-[#F1F0EC] antialiased selection:bg-[#C7F000] selection:text-[#111315]">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

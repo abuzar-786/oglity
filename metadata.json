@@ -1,0 +1,8 @@
+{
+  "name": "Oglity",
+  "description": "Specialist customer-acquisition partner and AQBC system for premium PPF and ceramic coating studios selling ₹50K+ packages.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
