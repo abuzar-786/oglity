@@ -19,11 +19,11 @@ export const ProofSection: React.FC<ProofSectionProps> = ({ onBookClick }) => {
     {
       value: '90+',
       label: 'Qualified inspection bookings',
-      context: 'Pre-screened owners seeking ₹50K+ paint protection.',
+      context: 'Pre-screened owners seeking ₹60K+ paint protection.',
       isLime: true,
     },
     {
-      value: '₹50K+',
+      value: '₹60K+',
       label: 'Average package floor',
       context: 'Focus exclusively on full PPF & multi-year ceramic.',
       isLime: false,
@@ -72,7 +72,7 @@ export const ProofSection: React.FC<ProofSectionProps> = ({ onBookClick }) => {
                 Want to see your territory's high-ticket PPF volume potential?
               </h4>
               <p className="text-xs sm:text-sm text-[#B8BEC4] mt-1 font-sans">
-                We'll analyze your pincode radius and share exact realistic numbers for ₹50K+ packages.
+                We'll analyze your pincode radius and share exact realistic numbers for ₹60K+ packages.
               </p>
             </div>
             <Button

@@ -4,56 +4,40 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Oglity</title>
-    <meta name="description" content="Specialist customer-acquisition partner and AQBC system for premium PPF and ceramic coating studios selling ₹50K+ packages." />
+    <meta name="description" content="Specialist customer-acquisition partner and AQBC system for premium PPF and ceramic coating studios selling ₹60K+ packages." />
     <meta property="og:title" content="Oglity" />
-    <meta property="og:description" content="Specialist customer-acquisition partner and AQBC system for premium PPF and ceramic coating studios selling ₹50K+ packages." />
+    <meta property="og:description" content="Specialist customer-acquisition partner and AQBC system for premium PPF and ceramic coating studios selling ₹60K+ packages." />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
     <script>
-      // Ensure window.fetch has both a getter and setter to prevent "Cannot set property fetch of #<Window> which has only a getter" errors in extension and test executor environments
       (function() {
         try {
-          var nativeFetch = window.fetch;
-          var _currentFetch = function() {
-            return nativeFetch ? nativeFetch.apply(window, arguments) : Promise.resolve(new Response());
-          };
-          var fetchGetter = function() {
-            return _currentFetch;
-          };
-          var fetchSetter = function(fn) {
-            _currentFetch = fn;
-          };
-
-          try {
-            Object.defineProperty(window, 'fetch', {
-              configurable: true,
-              enumerable: true,
-              get: fetchGetter,
-              set: fetchSetter
-            });
-          } catch (_) {}
-
-          try {
-            if (typeof Window !== 'undefined' && Window.prototype) {
-              Object.defineProperty(Window.prototype, 'fetch', {
-                configurable: true,
-                enumerable: true,
-                get: fetchGetter,
-                set: fetchSetter
-              });
+          var originalFetch = window.fetch ? window.fetch.bind(window) : null;
+          var currentFetch = originalFetch;
+          Object.defineProperty(window, 'fetch', {
+            get: function() {
+              return currentFetch;
+            },
+            set: function(val) {
+              currentFetch = val;
+            },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (e) {
+          // ignore
+        }
+        window.addEventListener('error', function(event) {
+          if (event && (
+            (event.filename && event.filename.indexOf('chrome-extension://') !== -1) ||
+            (event.message && event.message.indexOf('fetch') !== -1 && event.message.indexOf('getter') !== -1)
+          )) {
+            event.preventDefault();
+            if (typeof event.stopImmediatePropagation === 'function') {
+              event.stopImmediatePropagation();
             }
-          } catch (_) {}
-
-          // Suppress benign reduced-motion diagnostic warnings from animation engines
-          var originalWarn = console.warn;
-          console.warn = function() {
-            var msg = arguments[0];
-            if (typeof msg === 'string' && msg.indexOf('Reduced Motion enabled') !== -1) {
-              return;
-            }
-            return originalWarn.apply(console, arguments);
-          };
-        } catch (_) {}
+          }
+        }, true);
       })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -65,4 +49,3 @@
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-

@@ -128,7 +128,7 @@ export const Navigation: React.FC<NavigationProps> = ({ onOpenAuditModal }) => {
             </div>
 
             <div className="p-4 bg-[#252A2E]/40 border border-[#252A2E] rounded-[4px] text-xs font-['Plus_Jakarta_Sans',sans-serif] text-[#B8BEC4] space-y-1">
-              <div>Focus: PPF &amp; Ceramic (₹50K+)</div>
+              <div>Focus: PPF &amp; Ceramic (₹60K+)</div>
               <div>Specialty: High-ticket showroom bookings</div>
             </div>
           </div>

@@ -23,7 +23,7 @@ export const FinalCTASection: React.FC = () => {
     phoneWhatsApp: '',
     studioName: '',
     studioType: 'Yes, both PPF & Ceramic',
-    averagePackageValue: '₹50K–₹1L',
+    averagePackageValue: '₹60K–₹1L',
     monthlyCustomers: '6–12 cars/month',
     biggestProblem: 'Price shoppers',
     runningPaidAds: 'Yes',
@@ -86,17 +86,7 @@ export const FinalCTASection: React.FC = () => {
       `15-minute diagnostic to review PPF & ceramic acquisition numbers, lead qualification, and appointment capacity.\n\nStudio: ${formData.studioName}\nContact: ${formData.name} (${formData.phoneWhatsApp})\nMeeting link sent via WhatsApp.`
     );
     const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}`;
-    try {
-      const link = document.createElement('a');
-      link.href = gcalUrl;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch {
-      // Fallback
-    }
+    window.open(gcalUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -231,7 +221,7 @@ export const FinalCTASection: React.FC = () => {
                     </div>
 
                     <div className="hidden lg:block mt-8 p-3.5 bg-[#111315] border border-[#252A2E] rounded-[4px] text-xs font-sans text-[#B8BEC4]/80">
-                      Target: <strong className="text-[#F1F0EC]">15 qualified opportunities/mo</strong>
+                      Target: <strong className="text-[#F1F0EC]">20+ qualified opportunities/mo</strong>
                     </div>
                   </div>
 
@@ -338,7 +328,7 @@ export const FinalCTASection: React.FC = () => {
                           5. Average Package Value
                         </label>
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                          {['Under ₹25K', '₹25K–₹50K', '₹50K–₹1L', '₹1L+'].map((tier) => (
+                          {['Under ₹25K', '₹25K–₹60K', '₹60K–₹1L', '₹1L+'].map((tier) => (
                             <button
                               key={tier}
                               type="button"

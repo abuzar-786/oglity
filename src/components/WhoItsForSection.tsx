@@ -12,7 +12,7 @@ export const WhoItsForSection: React.FC<WhoItsForSectionProps> = ({ onApplyClick
     'Premium PPF studios',
     'Ceramic coating studios',
     'PPF + ceramic combined studios',
-    '₹50K+ average package value',
+    '₹60K+ average package value',
     'Studios with bay capacity for additional cars',
     'Owners serious about predictable acquisition',
   ];

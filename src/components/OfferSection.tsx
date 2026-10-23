@@ -20,7 +20,7 @@ export const OfferSection: React.FC<OfferSectionProps> = ({ onApplyClick }) => {
             theme="dark"
             align="center"
             eyebrow="What you get"
-            title="15 qualified inspection opportunities / month."
+            title="20+ qualified inspection opportunities / month."
             subtitle={
               <p className="text-sm sm:text-base lg:text-[17px] text-[#B8BEC4] leading-relaxed font-sans">
                 A complete acquisition infrastructure turning local car owners into confirmed showroom appointments.
@@ -49,7 +49,7 @@ export const OfferSection: React.FC<OfferSectionProps> = ({ onApplyClick }) => {
 
             <div className="mt-5 p-4 bg-[#111315] border border-[#252A2E] rounded-[4px] text-xs font-sans text-[#B8BEC4] space-y-1">
               <div className="font-semibold text-[#F1F0EC] text-sm">
-                15 qualified inspection opportunities / month
+                20+ qualified inspection opportunities / month
               </div>
               <p className="text-[#B8BEC4]/80">
                 A qualified opportunity is a prospect who meets the agreed criteria and books an inspection or consultation with your studio.

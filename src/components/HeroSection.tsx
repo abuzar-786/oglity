@@ -24,14 +24,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     },
     {
       id: 'leads',
-      value: '90+',
-      label: 'QUALIFIED LEADS GENERATED',
-      sublabel: 'Verified high-intent car owners',
+      value: '300+',
+      label: 'STUDIO VISITS GENERATED',
+      sublabel: 'Verified in-bay showroom inspections',
       isLime: true,
     },
     {
       id: 'package',
-      value: '₹50K+',
+      value: '₹60K+',
       label: 'HIGH-TICKET PACKAGE VALUE',
       sublabel: 'Full-body PPF & multi-year ceramic',
       isLime: false,
@@ -58,7 +58,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <div className="lg:col-span-7">
               {/* Dominant H1 using Manrope */}
               <h1 className="font-['Manrope',sans-serif] font-bold tracking-[-0.025em] leading-[1.12] text-[#F1F0EC] text-3xl sm:text-5xl lg:text-[46px] xl:text-[52px]">
-                Get <span className="text-[#C7F000]">15</span> More Qualified
+                Get <span className="text-[#C7F000]">20+</span> More Qualified
                 <br />
                 Inspection Opportunities
                 <br />
@@ -67,7 +67,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
               {/* Subheadline: Concise */}
               <p className="mt-5 sm:mt-6 text-base sm:text-lg text-[#B8BEC4] max-w-2xl font-['Inter',sans-serif] leading-relaxed">
-                Oglity helps ₹50K+ PPF and ceramic coating studios attract, qualify and book serious car owners using our AQBC™ customer-acquisition system.
+                Oglity helps ₹60K+ PPF and ceramic coating studios attract, qualify and book serious car owners using our AQBC™ customer-acquisition system.
               </p>
 
               {/* CTAs */}

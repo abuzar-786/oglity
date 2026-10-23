@@ -26,7 +26,7 @@ export const TransitionSection: React.FC<TransitionSectionProps> = ({ onQualifyC
 
         {/* Supporting Context */}
         <p className="mt-5 sm:mt-6 text-base sm:text-lg text-[#B8BEC4] max-w-2xl mx-auto font-sans leading-relaxed">
-          When your acquisition pipeline is calibrated to filter out bargain shoppers and pre-qualify vehicle owners, every showroom inspection is primed for a ₹50K+ booking.
+          When your acquisition pipeline is calibrated to filter out bargain shoppers and pre-qualify vehicle owners, every showroom inspection is primed for a ₹60K+ booking.
         </p>
 
         {/* Primary CTA */}

@@ -15,7 +15,7 @@ export const ProblemSection: React.FC = () => {
       number: '02',
       title: 'Low-quality enquiries',
       explanation:
-        'Generic lead forms attract bargain hunters instead of serious ₹50K+ PPF clients.',
+        'Generic lead forms attract bargain hunters instead of serious ₹60K+ PPF clients.',
     },
     {
       number: '03',
@@ -131,7 +131,7 @@ export const ProblemSection: React.FC = () => {
                   Vehicle arrives physically inside the bay for inspection and package closure.
                 </p>
                 <div className="mt-3 pt-2.5 border-t border-[#B8BEC4]/40 flex items-center gap-1.5 text-[10px] font-mono text-emerald-700 font-bold">
-                  <span>✓ 15+ Confirmed / Mo</span>
+                  <span>✓ 20+ Confirmed / Mo</span>
                 </div>
               </div>
             </div>

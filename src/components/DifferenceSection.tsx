@@ -38,7 +38,7 @@ export const DifferenceSection: React.FC = () => {
             title="Qualified opportunities over vanity leads."
             subtitle={
               <p className="text-sm sm:text-base lg:text-[17px] text-[#252A2E]/80 leading-relaxed font-sans">
-                Traditional agencies deliver inflated clicks. Oglity delivers pre-qualified showroom buyers for ₹50K+ PPF and ceramic bookings.
+                Traditional agencies deliver inflated clicks. Oglity delivers pre-qualified showroom buyers for ₹60K+ PPF and ceramic bookings.
               </p>
             }
           />

@@ -5,46 +5,64 @@ import { CaseStudyCard } from './ui/CaseStudyCard';
 export const CaseStudiesSection: React.FC = () => {
   const caseStudies = [
     {
-      client: 'Detailing Daddy',
-      serviceCategory: 'PPF + Ceramic Coating',
-      resultData: 'Consistent High-Ticket Bookings',
+      client: 'Detailing Shine',
+      category: 'CERAMIC TINTING',
+      leadsTracked: '202',
+      studioVisits: '108',
+      adSpend: '₹42,726.00',
+      costPerLead: '₹211.00',
       marketContext:
-        'Targeted high-intent luxury SUV and sedan owners with vehicle-specific PPF packages.',
+        'Filtered out car wash inquiries to focus exclusively on ₹60K+ PPF and ceramic protection.',
     },
     {
       client: 'Detailing Baba',
-      serviceCategory: 'Full Body PPF',
-      resultData: 'Direct Showroom Inquiries',
+      category: 'WINDOW TINT',
+      leadsTracked: '213',
+      studioVisits: '90',
+      adSpend: '₹57,721.00',
+      costPerLead: '₹270.00',
       marketContext:
-        'Filtered out entry-level wash queries to focus exclusively on premium self-healing film clients.',
+        'Eliminated low-budget wash queries to drive high-intent owners directly to in-bay inspections.',
     },
     {
-      client: 'Detailing Studio',
-      serviceCategory: 'Ceramic + Graphene Coating',
-      resultData: 'Showroom Visit Pipeline',
+      client: 'Detailing Garage',
+      category: 'MOBILE DETAILING',
+      leadsTracked: '211',
+      studioVisits: '74',
+      adSpend: '₹37,209.60',
+      costPerLead: '₹176.35',
       marketContext:
-        'Custom landing page qualification mechanism connected with instant WhatsApp booking bridge.',
+        'Automated budget qualification bridge routing serious car owners directly to showroom calendar.',
     },
     {
-      client: 'Car Detailing',
-      serviceCategory: 'High-Ticket Surface Protection',
-      resultData: 'Eliminated Price Shoppers',
+      client: 'Downey Tinting',
+      category: 'CERAMIC TINTING',
+      leadsTracked: '378',
+      studioVisits: '108',
+      adSpend: '$3,224.34',
+      costPerLead: '$8.53',
       marketContext:
-        'Replaced erratic Meta ad boosts with a structured multi-stage qualification funnel.',
+        'Replaced price-shopper inquiries with structured vehicle-specific PPF consultation bookings.',
     },
     {
-      client: 'PPF Studio',
-      serviceCategory: 'PPF Acquisition',
-      resultData: '5-Minute Speed-to-Lead',
+      client: 'Midwest Auto Pro',
+      category: 'WINDOW TINT',
+      leadsTracked: '312',
+      studioVisits: '90',
+      adSpend: '$2,973.36',
+      costPerLead: '$9.53',
       marketContext:
-        'Automated instant follow-up protecting front desk staff from price-shopper fatigue.',
+        'Pre-screened vehicle models and condition to protect front desk from cheap wash inquiry fatigue.',
     },
     {
-      client: 'Ceramic Studio',
-      serviceCategory: 'Ceramic Coating Acquisition',
-      resultData: '₹50K+ Filtered Opportunities',
+      client: 'Crystal Ride Mobile Detailing',
+      category: 'MOBILE DETAILING',
+      leadsTracked: '211',
+      studioVisits: '68',
+      adSpend: '$2,295.68',
+      costPerLead: '$10.88',
       marketContext:
-        'Pre-qualified prospects on vehicle model, paint condition, and ₹50K+ budget expectation.',
+        'Filter mechanism ensures only verified luxury vehicle owners qualify for high-ticket bookings.',
     },
   ];
 
@@ -77,13 +95,16 @@ export const CaseStudiesSection: React.FC = () => {
 
           {/* Marquee viewport */}
           <div className="overflow-hidden py-2">
-            <div className="animate-marquee gap-6">
+            <div className="animate-marquee gap-4 sm:gap-6">
               {[...caseStudies, ...caseStudies].map((study, idx) => (
-                <div key={idx} className="w-[310px] sm:w-[350px] shrink-0">
+                <div key={idx} className="w-[260px] sm:w-[300px] md:w-[330px] shrink-0">
                   <CaseStudyCard
                     client={study.client}
-                    serviceCategory={study.serviceCategory}
-                    resultData={study.resultData}
+                    category={study.category}
+                    leadsTracked={study.leadsTracked}
+                    studioVisits={study.studioVisits}
+                    adSpend={study.adSpend}
+                    costPerLead={study.costPerLead}
                     marketContext={study.marketContext}
                   />
                 </div>

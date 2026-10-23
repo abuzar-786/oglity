@@ -93,7 +93,7 @@ export const GrowthAuditModal: React.FC<GrowthAuditModalProps> = ({ isOpen, onCl
                   Schedule Your Private Growth Audit
                 </h3>
                 <p className="text-xs sm:text-sm text-[#B8BEC4] mt-1.5 font-sans leading-relaxed">
-                  We'll examine your territory's PPF &amp; Ceramic search demand and map out an exact roadmap to add 15+ confirmed showroom inspections monthly.
+                  We'll examine your territory's PPF &amp; Ceramic search demand and map out an exact roadmap to add 20+ confirmed showroom inspections monthly.
                 </p>
               </div>
 

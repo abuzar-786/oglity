@@ -16,13 +16,13 @@ export const TrustProofSection: React.FC<TrustProofSectionProps> = ({ onQualifyC
       isLime: false,
     },
     {
-      value: '90+',
-      label: 'QUALIFIED LEADS',
-      context: 'Pre-screened vehicle owners seeking ₹50K+ paint protection.',
+      value: '300+',
+      label: 'STUDIO VISITS',
+      context: 'Pre-screened vehicle owners booking ₹60K+ paint protection inspections.',
       isLime: true,
     },
     {
-      value: '₹50K+',
+      value: '₹60K+',
       label: 'PACKAGE VALUE',
       context: 'Full-body PPF & multi-year ceramic coating package floor.',
       isLime: false,
@@ -94,8 +94,8 @@ export const TrustProofSection: React.FC<TrustProofSectionProps> = ({ onQualifyC
                   id: 'card-1',
                   tag: 'VERIFIED PARTNER',
                   category: 'PPF & Ceramic Studio',
-                  quote: 'Pre-qualifies car owners by budget before they speak with my desk. Our bay is booked with serious ₹50K+ PPF appointments.',
-                  author: 'Detailing Daddy Studio Partner',
+                  quote: 'Pre-qualifies car owners by budget before they speak with my desk. Our bay is booked with serious ₹60K+ PPF appointments.',
+                  author: 'Detailing Shine',
                   sub: 'Apex Automotive Care • PPF Specialist',
                 },
                 {
@@ -110,25 +110,24 @@ export const TrustProofSection: React.FC<TrustProofSectionProps> = ({ onQualifyC
                   id: 'card-3',
                   tag: 'VERIFIED PARTNER',
                   category: 'Surface Protection',
-                  quote: '15+ qualified inspection slots filled every month. Ad to qualification to booking is completely dialed in.',
+                  quote: '20+ qualified inspection slots filled every month. Ad to qualification to booking is completely dialed in.',
                   author: 'Wrap Lab Partner',
                   sub: 'Precision Detailing Lab • High-Ticket Bay',
                 },
                 {
                   id: 'card-4',
-                  tag: 'CLIENT PROOF',
-                  category: 'Evidence Vault',
-                  quote: 'Verified WhatsApp lead qualification logs, in-bay inspection bookings & active Meta campaign pipelines.',
-                  author: 'Verified Studio Screenshots',
-                  sub: 'Drop verified campaign evidence & CRM logs here',
-                  isPlaceholder: true,
+                  tag: 'VERIFIED PARTNER',
+                  category: 'Mobile Detailing',
+                  quote: 'Automated qualification bridge routes serious car owners directly to our bay calendar without time wasted on cheap wash queries.',
+                  author: 'Detailing Garage',
+                  sub: 'Detailing Garage • High-Ticket Bay Specialist',
                 },
                 {
                   id: 'card-1-dup',
                   tag: 'VERIFIED PARTNER',
                   category: 'PPF & Ceramic Studio',
-                  quote: 'Pre-qualifies car owners by budget before they speak with my desk. Our bay is booked with serious ₹50K+ PPF appointments.',
-                  author: 'Detailing Daddy Studio Partner',
+                  quote: 'Pre-qualifies car owners by budget before they speak with my desk. Our bay is booked with serious ₹60K+ PPF appointments.',
+                  author: 'Detailing Shine',
                   sub: 'Apex Automotive Care • PPF Specialist',
                 },
                 {
@@ -143,27 +142,22 @@ export const TrustProofSection: React.FC<TrustProofSectionProps> = ({ onQualifyC
                   id: 'card-3-dup',
                   tag: 'VERIFIED PARTNER',
                   category: 'Surface Protection',
-                  quote: '15+ qualified inspection slots filled every month. Ad to qualification to booking is completely dialed in.',
+                  quote: '20+ qualified inspection slots filled every month. Ad to qualification to booking is completely dialed in.',
                   author: 'Wrap Lab Partner',
                   sub: 'Precision Detailing Lab • High-Ticket Bay',
                 },
                 {
                   id: 'card-4-dup',
-                  tag: 'CLIENT PROOF',
-                  category: 'Evidence Vault',
-                  quote: 'Verified WhatsApp lead qualification logs, in-bay inspection bookings & active Meta campaign pipelines.',
-                  author: 'Verified Studio Screenshots',
-                  sub: 'Drop verified campaign evidence & CRM logs here',
-                  isPlaceholder: true,
+                  tag: 'VERIFIED PARTNER',
+                  category: 'Mobile Detailing',
+                  quote: 'Automated qualification bridge routes serious car owners directly to our bay calendar without time wasted on cheap wash queries.',
+                  author: 'Detailing Garage',
+                  sub: 'Detailing Garage • High-Ticket Bay Specialist',
                 },
               ].map((item, index) => (
                 <div
                   key={`${item.id}-${index}`}
-                  className={`w-[290px] sm:w-[340px] md:w-[370px] shrink-0 p-5 sm:p-6 rounded-[4px] flex flex-col justify-between transition-colors ${
-                    item.isPlaceholder
-                      ? 'bg-[#111315]/80 border border-dashed border-[#252A2E] hover:border-[#C7F000]/40'
-                      : 'bg-[#111315] border border-[#252A2E] hover:border-[#C7F000]/50'
-                  }`}
+                  className="w-[290px] sm:w-[340px] md:w-[370px] shrink-0 p-5 sm:p-6 rounded-[4px] flex flex-col justify-between transition-colors bg-[#111315] border border-[#252A2E] hover:border-[#C7F000]/50"
                 >
                   <div>
                     <div className="flex items-start gap-2.5">
@@ -199,7 +193,7 @@ export const TrustProofSection: React.FC<TrustProofSectionProps> = ({ onQualifyC
               SEE IF YOUR STUDIO QUALIFIES →
             </Button>
             <span className="text-xs text-[#B8BEC4]/80 font-['Inter',sans-serif]">
-              Built strictly for studios selling ₹50K+ PPF and ceramic coating packages.
+              Built strictly for studios selling ₹60K+ PPF and ceramic coating packages.
             </span>
           </div>
         </div>

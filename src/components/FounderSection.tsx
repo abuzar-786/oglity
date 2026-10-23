@@ -334,7 +334,7 @@ export const FounderSection: React.FC<FounderSectionProps> = ({
                 Having spent time inside active automotive facilities and studying sales conversations with luxury car owners, he engineered a process built around actual showroom economics: pre-screening prospects by vehicle condition, timeline, and package value before they ever speak with a sales advisor.
               </p>
               <p className="text-[#F1F0EC] font-medium">
-                The objective is straightforward: protect your shop's time, eliminate low-intent inquiries, and deliver verified showroom inspections for ₹50K+ packages.
+                The objective is straightforward: protect your shop's time, eliminate low-intent inquiries, and deliver verified showroom inspections for ₹60K+ packages.
               </p>
             </div>
 

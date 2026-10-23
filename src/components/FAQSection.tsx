@@ -24,7 +24,7 @@ export const FAQSection: React.FC = () => {
     {
       question: 'What counts as a qualified inspection opportunity?',
       answer:
-        'A verified car owner who owns a qualifying vehicle, has confirmed their requirement for PPF or ceramic coating, understands the ₹50K+ package tier, and has scheduled an in-person showroom inspection or consultation.',
+        'A verified car owner who owns a qualifying vehicle, has confirmed their requirement for PPF or ceramic coating, understands the ₹60K+ package tier, and has scheduled an in-person showroom inspection or consultation.',
     },
     {
       question: 'Do you guarantee closed sales?',
