@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Play, Pause, Volume2, VolumeX, Maximize, RotateCcw, Upload, Film } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, Maximize, RotateCcw } from 'lucide-react';
 
 interface VSLVideoProps {
   initialVideoSrc?: string;
@@ -10,19 +10,17 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
   initialVideoSrc = '/videos/vsl.mp4',
   className = '',
 }) => {
-  const [videoSrc, setVideoSrc] = useState<string>(initialVideoSrc);
+  const [videoSrc] = useState<string>(initialVideoSrc);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [showControls, setShowControls] = useState(true);
-  const [hasLoadError, setHasLoadError] = useState(false);
   const [hasStartedPlaying, setHasStartedPlaying] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Auto-hide controls when playing
@@ -38,29 +36,8 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
     }
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      setVideoSrc(url);
-      setHasLoadError(false);
-      setIsPlaying(true);
-      setHasStartedPlaying(true);
-      setTimeout(() => {
-        if (videoRef.current) {
-          videoRef.current.play().catch(() => {});
-        }
-      }, 150);
-    }
-  };
-
   const togglePlay = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-
-    if (hasLoadError || !videoSrc) {
-      fileInputRef.current?.click();
-      return;
-    }
 
     if (videoRef.current) {
       if (isPlaying) {
@@ -73,10 +50,7 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
             setIsPlaying(true);
             setHasStartedPlaying(true);
           })
-          .catch(() => {
-            // If direct file wasn't found, trigger file selector
-            fileInputRef.current?.click();
-          });
+          .catch(() => {});
       }
     }
   };
@@ -112,7 +86,6 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
   const handleLoadedMetadata = () => {
     if (videoRef.current) {
       setDuration(videoRef.current.duration || 0);
-      setHasLoadError(false);
     }
   };
 
@@ -154,16 +127,6 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
       onClick={togglePlay}
       className={`relative w-full aspect-video rounded-[6px] overflow-hidden border border-[#252A2E] bg-[#0E1012] group shadow-2xl transition-all duration-300 hover:border-[#C7F000]/40 select-none ${className}`}
     >
-      {/* Hidden file input to attach custom VSL video */}
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="video/mp4,video/webm,video/quicktime,video/*"
-        onChange={handleFileChange}
-        className="hidden"
-        aria-label="Upload VSL Video"
-      />
-
       {/* Decorative technical corner accents */}
       <div className="absolute top-2 left-2 w-2.5 h-2.5 border-t border-l border-[#C7F000]/60 pointer-events-none z-30" />
       <div className="absolute top-2 right-2 w-2.5 h-2.5 border-t border-r border-[#C7F000]/60 pointer-events-none z-30" />
@@ -179,20 +142,17 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={() => setIsPlaying(false)}
-        onError={() => setHasLoadError(true)}
-        className={`w-full h-full object-cover transition-opacity duration-300 ${
-          hasLoadError ? 'opacity-0' : 'opacity-100'
-        }`}
+        className="w-full h-full object-cover"
       />
 
-      {/* Fallback / Poster Screen (Shown before playback or if direct file is pending upload) */}
-      {(!hasStartedPlaying || hasLoadError) && (
-        <div className="absolute inset-0 flex items-center justify-center bg-[#0D0F11] overflow-hidden select-none z-10">
+      {/* Fallback / Poster Screen (Shown before playback starts) */}
+      {!hasStartedPlaying && (
+        <div className="absolute inset-0 flex items-center justify-center bg-[#0D0F11] overflow-hidden select-none z-10 pointer-events-none">
           {/* Hexagonal Honeycomb Detailing Studio Lights Simulation */}
-          <div className="absolute inset-0 opacity-25 pointer-events-none">
+          <div className="absolute inset-0 opacity-25">
             <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <pattern id="hex-studio-grid-direct" width="48" height="83.14" patternUnits="userSpaceOnUse" patternTransform="scale(1.2)">
+                <pattern id="hex-studio-grid-clean" width="48" height="83.14" patternUnits="userSpaceOnUse" patternTransform="scale(1.2)">
                   <path
                     d="M48 0L24 13.86L0 0v27.71L24 41.57L48 27.71zm0 55.43L24 69.28L0 55.43V83.14L24 97L48 83.14z"
                     fill="none"
@@ -207,19 +167,19 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
                     strokeWidth="0.75"
                   />
                 </pattern>
-                <radialGradient id="vsl-ambient-direct" cx="50%" cy="50%" r="65%">
+                <radialGradient id="vsl-ambient-clean" cx="50%" cy="50%" r="65%">
                   <stop offset="0%" stopColor="#C7F000" stopOpacity="0.12" />
                   <stop offset="60%" stopColor="#111315" stopOpacity="0.7" />
                   <stop offset="100%" stopColor="#0A0C0E" stopOpacity="0.95" />
                 </radialGradient>
               </defs>
-              <rect width="100%" height="100%" fill="url(#hex-studio-grid-direct)" />
-              <rect width="100%" height="100%" fill="url(#vsl-ambient-direct)" />
+              <rect width="100%" height="100%" fill="url(#hex-studio-grid-clean)" />
+              <rect width="100%" height="100%" fill="url(#vsl-ambient-clean)" />
             </svg>
           </div>
 
           {/* Luxury Supercar Silhouette in Detailing Bay */}
-          <div className="absolute inset-x-0 bottom-6 sm:bottom-8 flex justify-center opacity-85 pointer-events-none">
+          <div className="absolute inset-x-0 bottom-6 sm:bottom-8 flex justify-center opacity-85">
             <svg
               viewBox="0 0 520 180"
               className="w-[85%] max-w-[420px] h-auto text-[#252A2E]"
@@ -291,17 +251,10 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
           <div className="relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full bg-[#C7F000] text-[#111315] shadow-[0_0_35px_rgba(199,240,0,0.5)] transition-transform duration-200 group-hover:scale-110">
             <Play className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 fill-[#111315] translate-x-0.5" />
           </div>
-
-          {hasLoadError && (
-            <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-[4px] bg-[#111315]/90 border border-[#C7F000]/40 text-[#C7F000] text-xs font-['Space_Grotesk',sans-serif]">
-              <Upload className="w-3.5 h-3.5" />
-              <span>Click to select VSL MP4 video</span>
-            </div>
-          )}
         </div>
       )}
 
-      {/* Custom Sleek Oglity Video Controls Bar (Zero YouTube UI) */}
+      {/* Custom Sleek Oglity Video Controls Bar */}
       <div
         className={`absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent pt-8 pb-3 px-3 sm:px-4 z-30 transition-opacity duration-300 ${
           showControls || !isPlaying ? 'opacity-100' : 'opacity-0 pointer-events-none'
@@ -365,17 +318,11 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
             )}
           </div>
 
-          {/* Right: Technical watermark, File Upload Trigger & Fullscreen */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            <button
-              type="button"
-              onClick={() => fileInputRef.current?.click()}
-              title="Attach / Change MP4 Video"
-              className="inline-flex items-center gap-1 px-2 py-1 rounded-[3px] bg-[#111315]/80 border border-[#252A2E] hover:border-[#C7F000]/60 text-[#B8BEC4] hover:text-[#C7F000] text-[10px] sm:text-[11px] font-['Space_Grotesk',sans-serif] transition-colors cursor-pointer"
-            >
-              <Upload className="w-3 h-3" />
-              <span className="hidden sm:inline">Change MP4</span>
-            </button>
+          {/* Right: Technical telemetry & Fullscreen */}
+          <div className="flex items-center gap-3">
+            <span className="hidden sm:inline text-[10px] font-['Space_Grotesk',sans-serif] tracking-wider text-[#C7F000]/90 uppercase font-semibold">
+              AQBC™ ACQUISITION WALKTHROUGH
+            </span>
 
             <button
               type="button"
