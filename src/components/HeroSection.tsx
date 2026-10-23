@@ -109,7 +109,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Right Column: VSL Video Section */}
             <div className="lg:col-span-5 w-full flex items-center justify-center">
-              <VSLVideo />
+              <VSLVideo initialVideoSrc="https://youtu.be/IQzREQoHUhM" />
             </div>
           </div>
 

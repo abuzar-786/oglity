@@ -6,8 +6,14 @@ interface VSLVideoProps {
   className?: string;
 }
 
+function extractYouTubeId(url: string): string | null {
+  if (!url) return null;
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+  return match ? match[1] : null;
+}
+
 export const VSLVideo: React.FC<VSLVideoProps> = ({
-  initialVideoSrc = '',
+  initialVideoSrc = 'https://youtu.be/IQzREQoHUhM',
   className = '',
 }) => {
   const [videoSrc, setVideoSrc] = useState<string>(initialVideoSrc);
@@ -16,6 +22,8 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
   const [progress, setProgress] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const youtubeId = extractYouTubeId(videoSrc);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -32,6 +40,11 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
   };
 
   const togglePlay = () => {
+    if (youtubeId) {
+      setIsPlaying(true);
+      return;
+    }
+
     if (!videoSrc) {
       fileInputRef.current?.click();
       return;
@@ -87,7 +100,7 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
       className={`relative w-full aspect-video rounded-[6px] overflow-hidden border border-[#252A2E] bg-[#15181B] group shadow-2xl transition-all duration-300 hover:border-[#C7F000]/40 ${className}`}
       onClick={togglePlay}
     >
-      {/* Hidden file input to attach VSL video */}
+      {/* Hidden file input to attach custom VSL video */}
       <input
         ref={fileInputRef}
         type="file"
@@ -98,12 +111,61 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
       />
 
       {/* Decorative technical corner accents */}
-      <div className="absolute top-2 left-2 w-2.5 h-2.5 border-t border-l border-[#C7F000]/60 pointer-events-none z-20" />
-      <div className="absolute top-2 right-2 w-2.5 h-2.5 border-t border-r border-[#C7F000]/60 pointer-events-none z-20" />
-      <div className="absolute bottom-2 left-2 w-2.5 h-2.5 border-b border-l border-[#C7F000]/60 pointer-events-none z-20" />
-      <div className="absolute bottom-2 right-2 w-2.5 h-2.5 border-b border-r border-[#C7F000]/60 pointer-events-none z-20" />
+      <div className="absolute top-2 left-2 w-2.5 h-2.5 border-t border-l border-[#C7F000]/60 pointer-events-none z-30" />
+      <div className="absolute top-2 right-2 w-2.5 h-2.5 border-t border-r border-[#C7F000]/60 pointer-events-none z-30" />
+      <div className="absolute bottom-2 left-2 w-2.5 h-2.5 border-b border-l border-[#C7F000]/60 pointer-events-none z-30" />
+      <div className="absolute bottom-2 right-2 w-2.5 h-2.5 border-b border-r border-[#C7F000]/60 pointer-events-none z-30" />
 
-      {videoSrc ? (
+      {/* Video Content Rendering */}
+      {youtubeId ? (
+        isPlaying ? (
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
+            title="Oglity AQBC System Walkthrough VSL"
+            className="w-full h-full border-0 absolute inset-0 z-20"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        ) : (
+          <div className="absolute inset-0 z-10 flex items-center justify-center overflow-hidden">
+            {/* YouTube Poster Image */}
+            <img
+              src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
+              alt="Oglity VSL Video"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
+              }}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+
+            {/* Gradient Scrim */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#111315]/90 via-[#111315]/40 to-[#111315]/60" />
+
+            {/* Precision Detailing HUD Telemetry Badges */}
+            <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-20 flex items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[2px] bg-[#111315]/85 border border-[#252A2E] text-[10px] sm:text-[11px] font-['Space_Grotesk',sans-serif] font-bold text-[#F1F0EC] tracking-wider backdrop-blur-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                <span>REC // 4K 60FPS</span>
+              </span>
+              <span className="hidden sm:inline-flex px-2 py-0.5 rounded-[2px] bg-[#111315]/85 border border-[#252A2E] text-[10px] font-['Space_Grotesk',sans-serif] text-[#C7F000] tracking-wider backdrop-blur-sm">
+                PPF &bull; CERAMIC VSL
+              </span>
+            </div>
+
+            <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20">
+              <span className="px-2 py-0.5 rounded-[2px] bg-[#111315]/85 border border-[#252A2E] text-[10px] sm:text-[11px] font-mono text-[#B8BEC4] tracking-wider backdrop-blur-sm">
+                AQBC™ SYSTEM
+              </span>
+            </div>
+
+            <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-20 hidden sm:flex items-center gap-2">
+              <span className="text-[10px] font-['Space_Grotesk',sans-serif] tracking-wider text-[#B8BEC4]/90 uppercase">
+                OGLITY ACQUISITION ENGINE // SHOWROOM WALKTHROUGH
+              </span>
+            </div>
+          </div>
+        )
+      ) : videoSrc ? (
         <video
           ref={videoRef}
           src={videoSrc}
@@ -153,11 +215,8 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              {/* Studio Ground Light Reflections */}
               <ellipse cx="260" cy="165" rx="220" ry="8" fill="#C7F000" fillOpacity="0.15" filter="blur(6px)" />
               <ellipse cx="260" cy="165" rx="180" ry="4" fill="#F1F0EC" fillOpacity="0.08" />
-
-              {/* Aerodynamic Supercar Profile */}
               <path
                 d="M40 145 C60 145, 75 142, 95 130 C125 110, 160 95, 210 90 C250 86, 310 88, 355 102 C395 114, 435 128, 475 138 C490 142, 495 145, 500 145"
                 stroke="#404850"
@@ -170,25 +229,18 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
                 strokeWidth="1.2"
                 strokeOpacity="0.7"
               />
-              {/* Roofline / Cockpit */}
               <path
                 d="M185 92 C210 65, 255 58, 305 60 C345 62, 375 75, 395 92"
                 stroke="#F1F0EC"
                 strokeWidth="1.8"
                 strokeOpacity="0.6"
               />
-              {/* Headlight LED DRL Accent */}
               <path d="M470 130 L495 136" stroke="#C7F000" strokeWidth="2.5" strokeLinecap="round" />
-              {/* Tail light LED Accent */}
               <path d="M65 134 L85 132" stroke="#FF4D4D" strokeWidth="2.5" strokeLinecap="round" />
-
-              {/* Wheels wireframe */}
               <circle cx="130" cy="145" r="24" stroke="#3A424A" strokeWidth="2" strokeDasharray="3 3" />
               <circle cx="130" cy="145" r="14" stroke="#C7F000" strokeWidth="1" strokeOpacity="0.8" />
               <circle cx="410" cy="145" r="24" stroke="#3A424A" strokeWidth="2" strokeDasharray="3 3" />
               <circle cx="410" cy="145" r="14" stroke="#C7F000" strokeWidth="1" strokeOpacity="0.8" />
-
-              {/* Laser Measurement Aligners */}
               <line x1="260" y1="35" x2="260" y2="165" stroke="#C7F000" strokeWidth="0.8" strokeDasharray="2 4" strokeOpacity="0.5" />
               <circle cx="260" cy="80" r="3" fill="#C7F000" />
             </svg>
@@ -219,31 +271,22 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
         </div>
       )}
 
-      {/* Center Play Button Overlay */}
-      {(!videoSrc || !isPlaying) && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/35 backdrop-blur-[1.5px] z-10 transition-opacity">
+      {/* Center Play Button Overlay (Visible when not playing or when thumbnail is displayed) */}
+      {!isPlaying && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-[1.5px] z-20 transition-opacity">
           <button
             type="button"
             onClick={togglePlay}
-            aria-label="Play video"
-            className="relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full bg-[#C7F000] text-[#111315] shadow-[0_0_35px_rgba(199,240,0,0.4)] transition-transform duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+            aria-label="Play VSL video"
+            className="relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full bg-[#C7F000] text-[#111315] shadow-[0_0_35px_rgba(199,240,0,0.5)] transition-transform duration-200 hover:scale-110 active:scale-95 cursor-pointer"
           >
-            {videoSrc ? (
-              <Play className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 fill-[#111315] translate-x-0.5" />
-            ) : (
-              <div className="relative flex items-center justify-center">
-                <Play className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 fill-[#111315] translate-x-0.5" />
-                <span className="absolute -bottom-1 -right-1 p-0.5 rounded-full bg-[#111315] text-[#C7F000]">
-                  <Upload className="w-2.5 h-2.5" />
-                </span>
-              </div>
-            )}
+            <Play className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 fill-[#111315] translate-x-0.5" />
           </button>
         </div>
       )}
 
-      {/* Video Controls Bar (Only icons & progress bar, zero text) */}
-      {videoSrc && (
+      {/* Video Controls Bar (Only for native HTML video files, not YouTube iframes) */}
+      {!youtubeId && videoSrc && (
         <div
           className={`absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-2.5 z-20 transition-opacity duration-200 ${
             isPlaying ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'
