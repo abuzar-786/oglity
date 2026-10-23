@@ -210,7 +210,7 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
             src={`https://www.youtube-nocookie.com/embed/${youtubeId}?enablejsapi=1&autoplay=1&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&playsinline=1&fs=0`}
             title="Oglity AQBC System Walkthrough VSL"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            className="absolute -top-[12%] -left-[6%] w-[112%] h-[124%] border-0 pointer-events-none"
+            className="absolute -top-[25%] -left-[18%] w-[136%] h-[150%] border-0 pointer-events-none"
           />
 
           {/* Initial Cover Poster (shown before first play to hide YouTube loading spinner) */}
