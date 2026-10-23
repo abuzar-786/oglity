@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { Play, Pause, Volume2, VolumeX, Maximize, Upload } from 'lucide-react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { Play, Pause, Volume2, VolumeX, Maximize, RotateCcw } from 'lucide-react';
 
 interface VSLVideoProps {
   initialVideoSrc?: string;
@@ -16,39 +16,94 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
   initialVideoSrc = 'https://youtu.be/IQzREQoHUhM',
   className = '',
 }) => {
-  const [videoSrc, setVideoSrc] = useState<string>(initialVideoSrc);
+  const [videoSrc] = useState<string>(initialVideoSrc);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [showControls, setShowControls] = useState(true);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const youtubeId = extractYouTubeId(videoSrc);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      setVideoSrc(url);
-      setIsPlaying(true);
-      setTimeout(() => {
-        if (videoRef.current) {
-          videoRef.current.play().catch(() => {});
+  const sendYTCommand = useCallback((func: string, args: (string | number | boolean)[] = []) => {
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      iframeRef.current.contentWindow.postMessage(
+        JSON.stringify({ event: 'command', func, args }),
+        '*'
+      );
+    }
+  }, []);
+
+  // Listen to YouTube API status messages
+  useEffect(() => {
+    if (!youtubeId) return;
+
+    const handleMessage = (event: MessageEvent) => {
+      try {
+        const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+        if (data && data.event === 'infoDelivery' && data.info) {
+          if (typeof data.info.currentTime === 'number') {
+            setCurrentTime(data.info.currentTime);
+          }
+          if (typeof data.info.duration === 'number' && data.info.duration > 0) {
+            setDuration(data.info.duration);
+            if (data.info.currentTime) {
+              setProgress((data.info.currentTime / data.info.duration) * 100);
+            }
+          }
+          if (data.info.playerState === 1) {
+            // Playing
+            setIsPlaying(true);
+          } else if (data.info.playerState === 2) {
+            // Paused
+            setIsPlaying(false);
+          } else if (data.info.playerState === 0) {
+            // Ended
+            setIsPlaying(false);
+          }
         }
-      }, 100);
+      } catch {
+        // Ignore non-json messages
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, [youtubeId]);
+
+  // Auto-hide controls when playing
+  const handleMouseMove = () => {
+    setShowControls(true);
+    if (controlsTimeoutRef.current) {
+      clearTimeout(controlsTimeoutRef.current);
+    }
+    if (isPlaying) {
+      controlsTimeoutRef.current = setTimeout(() => {
+        setShowControls(false);
+      }, 2500);
     }
   };
 
-  const togglePlay = () => {
+  const togglePlay = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+
     if (youtubeId) {
-      setIsPlaying(true);
+      if (isPlaying) {
+        sendYTCommand('pauseVideo');
+        setIsPlaying(false);
+      } else {
+        sendYTCommand('playVideo');
+        setIsPlaying(true);
+      }
       return;
     }
 
-    if (!videoSrc) {
-      fileInputRef.current?.click();
-      return;
-    }
     if (videoRef.current) {
       if (isPlaying) {
         videoRef.current.pause();
@@ -62,297 +117,237 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
 
   const toggleMute = (e: React.MouseEvent) => {
     e.stopPropagation();
+    if (youtubeId) {
+      if (isMuted) {
+        sendYTCommand('unMute');
+        setIsMuted(false);
+      } else {
+        sendYTCommand('mute');
+        setIsMuted(true);
+      }
+      return;
+    }
+
     if (videoRef.current) {
       videoRef.current.muted = !isMuted;
       setIsMuted(!isMuted);
     }
   };
 
-  const handleTimeUpdate = () => {
+  const handleRestart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (youtubeId) {
+      sendYTCommand('seekTo', [0, true]);
+      sendYTCommand('playVideo');
+      setIsPlaying(true);
+      setProgress(0);
+      return;
+    }
+
     if (videoRef.current) {
-      const current = videoRef.current.currentTime;
-      const total = videoRef.current.duration || 1;
-      setProgress((current / total) * 100);
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {});
+      setIsPlaying(true);
     }
   };
 
   const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const percent = Math.max(0, Math.min(1, clickX / rect.width));
+
+    if (youtubeId && duration > 0) {
+      const seekSeconds = percent * duration;
+      sendYTCommand('seekTo', [seekSeconds, true]);
+      setProgress(percent * 100);
+      setCurrentTime(seekSeconds);
+      return;
+    }
+
     if (videoRef.current) {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const percent = clickX / rect.width;
       videoRef.current.currentTime = percent * (videoRef.current.duration || 0);
+      setProgress(percent * 100);
     }
   };
 
   const handleFullscreen = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (videoRef.current) {
-      if (videoRef.current.requestFullscreen) {
-        videoRef.current.requestFullscreen();
+    if (containerRef.current) {
+      if (document.fullscreenElement) {
+        document.exitFullscreen?.().catch(() => {});
+      } else {
+        containerRef.current.requestFullscreen?.().catch(() => {});
       }
     }
   };
 
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  };
+
   return (
     <div
-      className={`relative w-full aspect-video rounded-[6px] overflow-hidden border border-[#252A2E] bg-[#15181B] group shadow-2xl transition-all duration-300 hover:border-[#C7F000]/40 ${className}`}
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
       onClick={togglePlay}
+      className={`relative w-full aspect-video rounded-[6px] overflow-hidden border border-[#252A2E] bg-[#0E1012] group shadow-2xl transition-all duration-300 hover:border-[#C7F000]/40 select-none ${className}`}
     >
-      {/* Hidden file input to attach custom VSL video */}
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="video/mp4,video/webm,video/quicktime,video/*"
-        onChange={handleFileChange}
-        className="hidden"
-        aria-label="Upload VSL Video"
-      />
-
       {/* Decorative technical corner accents */}
       <div className="absolute top-2 left-2 w-2.5 h-2.5 border-t border-l border-[#C7F000]/60 pointer-events-none z-30" />
       <div className="absolute top-2 right-2 w-2.5 h-2.5 border-t border-r border-[#C7F000]/60 pointer-events-none z-30" />
       <div className="absolute bottom-2 left-2 w-2.5 h-2.5 border-b border-l border-[#C7F000]/60 pointer-events-none z-30" />
       <div className="absolute bottom-2 right-2 w-2.5 h-2.5 border-b border-r border-[#C7F000]/60 pointer-events-none z-30" />
 
-      {/* Video Content Rendering */}
+      {/* Video Frame */}
       {youtubeId ? (
-        isPlaying ? (
+        <div className="absolute inset-0 overflow-hidden bg-black flex items-center justify-center">
+          {/* Iframe with scaled dimensions and cropped margins to completely remove YouTube UI header/footer */}
           <iframe
-            src={`https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
+            ref={iframeRef}
+            src={`https://www.youtube-nocookie.com/embed/${youtubeId}?enablejsapi=1&autoplay=1&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&playsinline=1&fs=0`}
             title="Oglity AQBC System Walkthrough VSL"
-            className="w-full h-full border-0 absolute inset-0 z-20"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
+            className="absolute -top-[12%] -left-[6%] w-[112%] h-[124%] border-0 pointer-events-none"
           />
-        ) : (
-          <div className="absolute inset-0 z-10 flex items-center justify-center overflow-hidden">
-            {/* YouTube Poster Image */}
-            <img
-              src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
-              alt="Oglity VSL Video"
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).src = `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
-              }}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
 
-            {/* Gradient Scrim */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#111315]/90 via-[#111315]/40 to-[#111315]/60" />
+          {/* Initial Cover Poster (shown before first play to hide YouTube loading spinner) */}
+          {!isPlaying && progress === 0 && (
+            <div className="absolute inset-0 z-10 flex items-center justify-center overflow-hidden">
+              <img
+                src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
+                alt="Oglity VSL Video"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src = `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`;
+                }}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#111315]/90 via-[#111315]/40 to-[#111315]/60" />
 
-            {/* Precision Detailing HUD Telemetry Badges */}
-            <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-20 flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[2px] bg-[#111315]/85 border border-[#252A2E] text-[10px] sm:text-[11px] font-['Space_Grotesk',sans-serif] font-bold text-[#F1F0EC] tracking-wider backdrop-blur-sm">
-                <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-                <span>REC // 4K 60FPS</span>
-              </span>
-              <span className="hidden sm:inline-flex px-2 py-0.5 rounded-[2px] bg-[#111315]/85 border border-[#252A2E] text-[10px] font-['Space_Grotesk',sans-serif] text-[#C7F000] tracking-wider backdrop-blur-sm">
-                PPF &bull; CERAMIC VSL
-              </span>
+              {/* HUD Telemetry Overlay */}
+              <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-20 flex items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[2px] bg-[#111315]/85 border border-[#252A2E] text-[10px] sm:text-[11px] font-['Space_Grotesk',sans-serif] font-bold text-[#F1F0EC] tracking-wider backdrop-blur-sm">
+                  <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                  <span>REC // 4K 60FPS</span>
+                </span>
+                <span className="hidden sm:inline-flex px-2 py-0.5 rounded-[2px] bg-[#111315]/85 border border-[#252A2E] text-[10px] font-['Space_Grotesk',sans-serif] text-[#C7F000] tracking-wider backdrop-blur-sm">
+                  PPF &bull; CERAMIC VSL
+                </span>
+              </div>
+
+              <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20">
+                <span className="px-2 py-0.5 rounded-[2px] bg-[#111315]/85 border border-[#252A2E] text-[10px] sm:text-[11px] font-mono text-[#B8BEC4] tracking-wider backdrop-blur-sm">
+                  AQBC™ SYSTEM
+                </span>
+              </div>
             </div>
-
-            <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20">
-              <span className="px-2 py-0.5 rounded-[2px] bg-[#111315]/85 border border-[#252A2E] text-[10px] sm:text-[11px] font-mono text-[#B8BEC4] tracking-wider backdrop-blur-sm">
-                AQBC™ SYSTEM
-              </span>
-            </div>
-
-            <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-20 hidden sm:flex items-center gap-2">
-              <span className="text-[10px] font-['Space_Grotesk',sans-serif] tracking-wider text-[#B8BEC4]/90 uppercase">
-                OGLITY ACQUISITION ENGINE // SHOWROOM WALKTHROUGH
-              </span>
-            </div>
-          </div>
-        )
+          )}
+        </div>
       ) : videoSrc ? (
         <video
           ref={videoRef}
           src={videoSrc}
           playsInline
-          onTimeUpdate={handleTimeUpdate}
           onEnded={() => setIsPlaying(false)}
           className="w-full h-full object-cover"
         />
-      ) : (
-        /* Video placeholder: High-fidelity cinematic detailing bay with HUD telemetry */
-        <div className="absolute inset-0 flex items-center justify-center bg-[#0D0F11] overflow-hidden select-none">
-          {/* Hexagonal Honeycomb Detailing Studio Lights Simulation */}
-          <div className="absolute inset-0 opacity-25 pointer-events-none">
-            <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <pattern id="hex-studio-grid" width="48" height="83.14" patternUnits="userSpaceOnUse" patternTransform="scale(1.2)">
-                  <path
-                    d="M48 0L24 13.86L0 0v27.71L24 41.57L48 27.71zm0 55.43L24 69.28L0 55.43V83.14L24 97L48 83.14z"
-                    fill="none"
-                    stroke="#C7F000"
-                    strokeWidth="0.75"
-                    strokeOpacity="0.4"
-                  />
-                  <path
-                    d="M24 13.86v27.71M24 69.28V97"
-                    fill="none"
-                    stroke="#252A2E"
-                    strokeWidth="0.75"
-                  />
-                </pattern>
-                <radialGradient id="vsl-ambient" cx="50%" cy="50%" r="65%">
-                  <stop offset="0%" stopColor="#C7F000" stopOpacity="0.12" />
-                  <stop offset="60%" stopColor="#111315" stopOpacity="0.7" />
-                  <stop offset="100%" stopColor="#0A0C0E" stopOpacity="0.95" />
-                </radialGradient>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#hex-studio-grid)" />
-              <rect width="100%" height="100%" fill="url(#vsl-ambient)" />
-            </svg>
-          </div>
+      ) : null}
 
-          {/* Luxury Supercar Silhouette in Detailing Bay */}
-          <div className="absolute inset-x-0 bottom-6 sm:bottom-8 flex justify-center opacity-85 pointer-events-none">
-            <svg
-              viewBox="0 0 520 180"
-              className="w-[85%] max-w-[420px] h-auto text-[#252A2E]"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <ellipse cx="260" cy="165" rx="220" ry="8" fill="#C7F000" fillOpacity="0.15" filter="blur(6px)" />
-              <ellipse cx="260" cy="165" rx="180" ry="4" fill="#F1F0EC" fillOpacity="0.08" />
-              <path
-                d="M40 145 C60 145, 75 142, 95 130 C125 110, 160 95, 210 90 C250 86, 310 88, 355 102 C395 114, 435 128, 475 138 C490 142, 495 145, 500 145"
-                stroke="#404850"
-                strokeWidth="1.5"
-                strokeDasharray="4 3"
-              />
-              <path
-                d="M60 145 C80 135, 110 130, 140 115 C175 98, 220 82, 275 80 C340 78, 380 95, 415 112 C445 125, 465 140, 480 145"
-                stroke="#C7F000"
-                strokeWidth="1.2"
-                strokeOpacity="0.7"
-              />
-              <path
-                d="M185 92 C210 65, 255 58, 305 60 C345 62, 375 75, 395 92"
-                stroke="#F1F0EC"
-                strokeWidth="1.8"
-                strokeOpacity="0.6"
-              />
-              <path d="M470 130 L495 136" stroke="#C7F000" strokeWidth="2.5" strokeLinecap="round" />
-              <path d="M65 134 L85 132" stroke="#FF4D4D" strokeWidth="2.5" strokeLinecap="round" />
-              <circle cx="130" cy="145" r="24" stroke="#3A424A" strokeWidth="2" strokeDasharray="3 3" />
-              <circle cx="130" cy="145" r="14" stroke="#C7F000" strokeWidth="1" strokeOpacity="0.8" />
-              <circle cx="410" cy="145" r="24" stroke="#3A424A" strokeWidth="2" strokeDasharray="3 3" />
-              <circle cx="410" cy="145" r="14" stroke="#C7F000" strokeWidth="1" strokeOpacity="0.8" />
-              <line x1="260" y1="35" x2="260" y2="165" stroke="#C7F000" strokeWidth="0.8" strokeDasharray="2 4" strokeOpacity="0.5" />
-              <circle cx="260" cy="80" r="3" fill="#C7F000" />
-            </svg>
-          </div>
+      {/* Transparent Click Shield (captures clicks and prevents any YouTube UI interaction) */}
+      <div className="absolute inset-0 z-10 cursor-pointer" />
 
-          {/* Precision Detailing HUD Telemetry Badges */}
-          <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[2px] bg-[#111315]/85 border border-[#252A2E] text-[10px] sm:text-[11px] font-['Space_Grotesk',sans-serif] font-bold text-[#F1F0EC] tracking-wider backdrop-blur-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-              <span>REC // 4K 60FPS</span>
-            </span>
-            <span className="hidden sm:inline-flex px-2 py-0.5 rounded-[2px] bg-[#111315]/85 border border-[#252A2E] text-[10px] font-['Space_Grotesk',sans-serif] text-[#C7F000] tracking-wider backdrop-blur-sm">
-              PPF &bull; CERAMIC VSL
-            </span>
-          </div>
-
-          <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
-            <span className="px-2 py-0.5 rounded-[2px] bg-[#111315]/85 border border-[#252A2E] text-[10px] sm:text-[11px] font-mono text-[#B8BEC4] tracking-wider backdrop-blur-sm">
-              03:45 MIN
-            </span>
-          </div>
-
-          <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 hidden sm:flex items-center gap-2">
-            <span className="text-[10px] font-['Space_Grotesk',sans-serif] tracking-wider text-[#B8BEC4]/80 uppercase">
-              OGLITY ACQUISITION ENGINE // SHOWROOM WALKTHROUGH
-            </span>
-          </div>
-        </div>
-      )}
-
-      {/* Center Play Button Overlay (Visible when not playing or when thumbnail is displayed) */}
+      {/* Center Play / Pause Indicator (visible when paused) */}
       {!isPlaying && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-[1.5px] z-20 transition-opacity">
-          <button
-            type="button"
-            onClick={togglePlay}
-            aria-label="Play VSL video"
-            className="relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full bg-[#C7F000] text-[#111315] shadow-[0_0_35px_rgba(199,240,0,0.5)] transition-transform duration-200 hover:scale-110 active:scale-95 cursor-pointer"
-          >
+        <div className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-[1.5px] z-20 transition-opacity pointer-events-none">
+          <div className="relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full bg-[#C7F000] text-[#111315] shadow-[0_0_35px_rgba(199,240,0,0.5)] transition-transform duration-200 group-hover:scale-110">
             <Play className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 fill-[#111315] translate-x-0.5" />
-          </button>
+          </div>
         </div>
       )}
 
-      {/* Video Controls Bar (Only for native HTML video files, not YouTube iframes) */}
-      {!youtubeId && videoSrc && (
+      {/* Custom Sleek Oglity Video Controls Bar (Zero YouTube UI) */}
+      <div
+        className={`absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent pt-8 pb-3 px-3 sm:px-4 z-30 transition-opacity duration-300 ${
+          showControls || !isPlaying ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Custom Lime Progress Bar */}
         <div
-          className={`absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-2.5 z-20 transition-opacity duration-200 ${
-            isPlaying ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'
-          }`}
-          onClick={(e) => e.stopPropagation()}
+          className="w-full h-1.5 bg-white/20 hover:h-2.5 cursor-pointer rounded-full mb-2.5 transition-all relative overflow-hidden"
+          onClick={handleSeek}
         >
-          {/* Progress bar */}
           <div
-            className="w-full h-1 bg-white/20 hover:h-1.5 cursor-pointer rounded-full mb-2 transition-all"
-            onClick={handleSeek}
-          >
-            <div
-              className="h-full bg-[#C7F000] rounded-full relative"
-              style={{ width: `${progress}%` }}
-            />
+            className="h-full bg-[#C7F000] rounded-full relative transition-[width] duration-150"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+
+        {/* Controls Items */}
+        <div className="flex items-center justify-between text-[#F1F0EC]">
+          {/* Left: Play/Pause, Restart, Volume, Timestamp */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <button
+              type="button"
+              onClick={togglePlay}
+              aria-label={isPlaying ? 'Pause' : 'Play'}
+              className="p-1 text-[#F1F0EC] hover:text-[#C7F000] transition-colors cursor-pointer"
+            >
+              {isPlaying ? (
+                <Pause className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
+              ) : (
+                <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
+              )}
+            </button>
+
+            <button
+              type="button"
+              onClick={handleRestart}
+              aria-label="Restart video"
+              className="p-1 text-[#F1F0EC]/80 hover:text-[#C7F000] transition-colors cursor-pointer"
+            >
+              <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            </button>
+
+            <button
+              type="button"
+              onClick={toggleMute}
+              aria-label={isMuted ? 'Unmute' : 'Mute'}
+              className="p-1 text-[#F1F0EC]/80 hover:text-[#C7F000] transition-colors cursor-pointer"
+            >
+              {isMuted ? (
+                <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
+              ) : (
+                <Volume2 className="w-4 h-4 sm:w-5 sm:h-5" />
+              )}
+            </button>
+
+            {duration > 0 && (
+              <span className="text-[11px] sm:text-xs font-mono text-[#B8BEC4] ml-1">
+                {formatTime(currentTime)} / {formatTime(duration)}
+              </span>
+            )}
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={togglePlay}
-                aria-label="Toggle play"
-                className="text-[#F1F0EC] hover:text-[#C7F000] transition-colors p-1"
-              >
-                {isPlaying ? (
-                  <Pause className="w-4 h-4 fill-current" />
-                ) : (
-                  <Play className="w-4 h-4 fill-current" />
-                )}
-              </button>
-              <button
-                type="button"
-                onClick={toggleMute}
-                aria-label="Toggle mute"
-                className="text-[#F1F0EC] hover:text-[#C7F000] transition-colors p-1"
-              >
-                {isMuted ? (
-                  <VolumeX className="w-4 h-4" />
-                ) : (
-                  <Volume2 className="w-4 h-4" />
-                )}
-              </button>
-            </div>
+          {/* Right: Technical watermark & Fullscreen */}
+          <div className="flex items-center gap-3">
+            <span className="hidden sm:inline text-[10px] font-['Space_Grotesk',sans-serif] tracking-wider text-[#C7F000]/90 uppercase font-semibold">
+              AQBC™ ACQUISITION WALKTHROUGH
+            </span>
 
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                aria-label="Change video"
-                className="text-[#F1F0EC]/80 hover:text-[#C7F000] transition-colors p-1"
-              >
-                <Upload className="w-3.5 h-3.5" />
-              </button>
-              <button
-                type="button"
-                onClick={handleFullscreen}
-                aria-label="Fullscreen"
-                className="text-[#F1F0EC] hover:text-[#C7F000] transition-colors p-1"
-              >
-                <Maximize className="w-4 h-4" />
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={handleFullscreen}
+              aria-label="Fullscreen"
+              className="p-1 text-[#F1F0EC]/80 hover:text-[#C7F000] transition-colors cursor-pointer"
+            >
+              <Maximize className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
