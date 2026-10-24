@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Calendar, Clock, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Search, TrendingUp, CheckCircle2, Clock } from 'lucide-react';
 import { GridBackground } from './ui/GridBackground';
 
 declare global {
@@ -39,112 +39,171 @@ export const FinalCTASection: React.FC = () => {
     };
   }, []);
 
+  const discussionPoints = [
+    {
+      num: '01',
+      title: 'Your Current Challenges',
+      desc: 'Where are you losing potential customers?',
+      icon: Search,
+    },
+    {
+      num: '02',
+      title: 'Your Growth Opportunities',
+      desc: 'How could qualification, follow-ups and bookings improve?',
+      icon: TrendingUp,
+    },
+    {
+      num: '03',
+      title: 'Your Next Step',
+      desc: "Whether Oglity's AQBC™ System is right for your studio.",
+      icon: CheckCircle2,
+    },
+  ];
+
   return (
-    <section id="qualification" className="relative w-full bg-[#0E1012] py-20 sm:py-28 border-t border-[#252A2E]">
+    <section
+      id="qualification"
+      className="relative w-full bg-[#0A0C0E] py-12 sm:py-18 lg:py-22 border-t border-[#1E2226] scroll-mt-20 sm:scroll-mt-24"
+    >
       <GridBackground theme="dark" showCoordinates={false} className="relative">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Main Section Header */}
-          <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-14">
-            <span className="text-xs font-['Plus_Jakarta_Sans',sans-serif] tracking-widest text-[#C7F000] font-semibold uppercase">
-              RESERVE YOUR PRIVATE CALL
-            </span>
-            <h2 className="mt-2 font-['Manrope',sans-serif] font-extrabold text-3xl sm:text-4xl md:text-5xl text-[#F1F0EC] tracking-tight leading-tight">
-              Book Your 30-Minute Growth Diagnostic
+        <div className="max-w-4xl mx-auto px-3.5 sm:px-6 lg:px-8">
+          {/* Section Header */}
+          <div className="max-w-2xl mx-auto text-center mb-6 sm:mb-9">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#16191C] border border-[#252A2E] rounded-[4px] mb-2.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C7F000]" />
+              <span className="text-[11px] sm:text-xs font-mono font-bold tracking-wider text-[#C7F000] uppercase">
+                LET'S TALK ABOUT YOUR STUDIO
+              </span>
+            </div>
+
+            <h2 className="font-['Manrope',sans-serif] font-extrabold text-2xl sm:text-3xl md:text-4xl tracking-tight leading-[1.14] text-[#F1F0EC]">
+              Book Your 30-Minute Studio Acquisition Call.
             </h2>
-            <p className="mt-3 sm:mt-4 text-sm sm:text-base text-[#B8BEC4] font-sans leading-relaxed">
-              Select your date &amp; time below to speak directly with Abuzar Gaur. We'll examine your territory, vehicle owner demand, and bay economics for ₹60K+ packages.
+
+            <p className="mt-2 text-sm sm:text-base text-[#CAD0D6] font-sans leading-relaxed">
+              Let's find out what's stopping serious car owners from becoming actual showroom visitors.
+            </p>
+
+            <p className="mt-2.5 text-xs sm:text-sm text-[#A6ADB5] font-sans">
+              On this free, no-obligation call with Abuzar Gaur, we'll discuss:
             </p>
           </div>
 
-          {/* Diagnostic Context: 3 simple expectation steps */}
-          <div className="max-w-4xl mx-auto mb-8 sm:mb-10">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 text-left">
-              <div className="p-4 bg-[#111315] border border-[#252A2E] rounded-[4px]">
-                <div className="font-['Plus_Jakarta_Sans',sans-serif] font-semibold text-xs text-[#C7F000] tracking-wider mb-1">
-                  01 / Review numbers
-                </div>
-                <h4 className="font-['Plus_Jakarta_Sans',sans-serif] font-bold text-sm text-[#F1F0EC] mb-1">
-                  We review your numbers
+          {/* MOBILE ONLY: One compact panel with 3 numbered rows */}
+          <div className="block md:hidden mb-5 p-3.5 bg-[#111315] border border-[#252A2E] rounded-[10px] space-y-2.5 text-left">
+            <div className="flex items-start gap-2.5">
+              <span className="font-mono text-xs font-bold text-[#C7F000] shrink-0 mt-0.5">
+                01 —
+              </span>
+              <div>
+                <h4 className="font-['Manrope',sans-serif] font-bold text-xs text-[#F1F0EC]">
+                  Your Current Challenges
                 </h4>
-                <p className="text-xs text-[#B8BEC4] font-sans leading-relaxed">
-                  We'll understand your current acquisition, lead quality, and bay booking setup.
+                <p className="text-[11px] text-[#A6ADB5] font-sans leading-snug mt-0.5">
+                  Find where potential customers drop off.
                 </p>
               </div>
+            </div>
 
-              <div className="p-4 bg-[#111315] border border-[#252A2E] rounded-[4px]">
-                <div className="font-['Plus_Jakarta_Sans',sans-serif] font-semibold text-xs text-[#C7F000] tracking-wider mb-1">
-                  02 / Find bottleneck
-                </div>
-                <h4 className="font-['Plus_Jakarta_Sans',sans-serif] font-bold text-sm text-[#F1F0EC] mb-1">
-                  We find the bottleneck
+            <div className="pt-2 border-t border-[#252A2E]/60 flex items-start gap-2.5">
+              <span className="font-mono text-xs font-bold text-[#C7F000] shrink-0 mt-0.5">
+                02 —
+              </span>
+              <div>
+                <h4 className="font-['Manrope',sans-serif] font-bold text-xs text-[#F1F0EC]">
+                  Growth Opportunities
                 </h4>
-                <p className="text-xs text-[#B8BEC4] font-sans leading-relaxed">
-                  We'll pinpoint if your challenge is unvetted traffic, speed-to-lead, or inspection closing.
+                <p className="text-[11px] text-[#A6ADB5] font-sans leading-snug mt-0.5">
+                  Explore ways to improve bookings.
                 </p>
               </div>
+            </div>
 
-              <div className="p-4 bg-[#111315] border border-[#252A2E] rounded-[4px]">
-                <div className="font-['Plus_Jakarta_Sans',sans-serif] font-semibold text-xs text-[#C7F000] tracking-wider mb-1">
-                  03 / Next step
-                </div>
-                <h4 className="font-['Plus_Jakarta_Sans',sans-serif] font-bold text-sm text-[#F1F0EC] mb-1">
-                  You get a clear next step
+            <div className="pt-2 border-t border-[#252A2E]/60 flex items-start gap-2.5">
+              <span className="font-mono text-xs font-bold text-[#C7F000] shrink-0 mt-0.5">
+                03 —
+              </span>
+              <div>
+                <h4 className="font-['Manrope',sans-serif] font-bold text-xs text-[#F1F0EC]">
+                  Your Next Step
                 </h4>
-                <p className="text-xs text-[#B8BEC4] font-sans leading-relaxed">
-                  If there's a strong territorial fit, we'll map how to deploy AQBC™ for 20+ bookings/mo.
+                <p className="text-[11px] text-[#A6ADB5] font-sans leading-snug mt-0.5">
+                  See whether Oglity is the right fit.
                 </p>
               </div>
             </div>
           </div>
 
-          {/* MAIN FUNNEL CARD: CALENDLY EMBED */}
+          {/* DESKTOP ONLY: Three-column benefit-card layout */}
+          <div className="hidden md:grid md:grid-cols-3 gap-4 mb-7">
+            {discussionPoints.map((point) => {
+              const Icon = point.icon;
+              return (
+                <div
+                  key={point.num}
+                  className="p-4 bg-[#111315] border border-[#252A2E] rounded-[10px] hover:border-[#C7F000]/40 transition-colors flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[11px] font-mono font-bold text-[#C7F000]">
+                        {point.num}
+                      </span>
+                      <Icon className="w-4 h-4 text-[#C7F000]" />
+                    </div>
+
+                    <h4 className="font-['Manrope',sans-serif] font-bold text-[15px] text-[#F1F0EC] tracking-tight leading-snug">
+                      {point.title}
+                    </h4>
+
+                    <p className="mt-1 text-xs text-[#A6ADB5] font-sans leading-relaxed">
+                      {point.desc}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Booking Scheduler Container (Full Width Optimized) */}
           <div
             id="qualification-funnel-card"
-            className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 bg-[#16191C] border border-[#252A2E] rounded-[6px] shadow-[0_12px_48px_rgba(0,0,0,0.5)] transition-all duration-300"
+            className="p-3 sm:p-6 lg:p-7 bg-[#0F1215] border border-[#252A2E] rounded-[14px] sm:rounded-[16px] shadow-2xl transition-all duration-300"
           >
-            {/* Direct Header Information */}
-            <div className="pb-5 border-b border-[#252A2E] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-left">
+            {/* Header with Instruction */}
+            <div className="pb-3.5 mb-3.5 border-b border-[#252A2E] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 text-left">
               <div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#C7F000] animate-pulse" />
-                  <span className="text-xs font-['Plus_Jakarta_Sans',sans-serif] tracking-wider text-[#C7F000] font-bold">
-                    DIRECT CALENDAR SCHEDULER
-                  </span>
-                </div>
-                <h3 className="font-['Plus_Jakarta_Sans',sans-serif] font-extrabold text-xl sm:text-2xl text-[#F1F0EC] tracking-tight mt-1">
-                  Select A Convenient Date &amp; Time
+                <h3 className="font-['Manrope',sans-serif] font-bold text-sm sm:text-base text-[#F1F0EC] tracking-tight">
+                  Choose a convenient time below.
                 </h3>
-                <p className="mt-1 text-xs sm:text-sm text-[#B8BEC4] font-sans leading-relaxed">
-                  Real-time calendar slot reservation. You'll receive instant calendar and WhatsApp invitations.
+                <p className="text-xs text-[#A6ADB5] font-sans mt-0.5">
+                  Real-time calendar slot reservation with Abuzar Gaur.
                 </p>
               </div>
 
-              <div className="shrink-0 flex items-center gap-2.5 px-3 py-1.5 bg-[#111315] border border-[#252A2E] rounded-[4px] text-xs font-mono text-[#F1F0EC]">
+              <div className="self-start sm:self-auto flex items-center gap-2 px-2.5 py-1 sm:px-3 sm:py-1.5 bg-[#16191D] border border-[#262C32] rounded-[6px] text-xs font-mono text-[#F1F0EC]">
                 <Clock className="w-3.5 h-3.5 text-[#C7F000]" />
                 <span className="text-[#C7F000] font-bold">30 MIN</span>
-                <span className="text-[#B8BEC4]">PRIVATE 1-ON-1</span>
+                <span className="text-[#A6ADB5]">DISCOVERY CALL</span>
               </div>
             </div>
 
             {/* Embedded Calendly Inline Widget */}
-            <div className="mt-5 w-full rounded-[6px] overflow-hidden bg-[#111315] border border-[#252A2E]">
+            <div className="w-full rounded-[8px] sm:rounded-[10px] overflow-hidden bg-[#111315] border border-[#252A2E]">
               <div
                 className="calendly-inline-widget w-full"
                 data-url="https://calendly.com/abuzargour1188/30min?month=2026-10"
-                style={{ minWidth: '320px', height: '700px' }}
+                style={{ minWidth: '100%', height: '760px' }}
               />
             </div>
 
-            {/* Reassurance Footer */}
-            <div className="mt-6 pt-4 border-t border-[#252A2E] flex flex-wrap items-center justify-between gap-4 text-xs font-sans text-[#B8BEC4]">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-[#C7F000]" />
-                <span>Zero sales pressure • Strictly diagnostic conversation</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#C7F000]" />
-                <span>1-on-1 with Abuzar Gaur</span>
-              </div>
+            {/* Microcopy & Reassurance Footer */}
+            <div className="mt-4 pt-3.5 border-t border-[#252A2E] text-center space-y-1">
+              <p className="text-xs sm:text-[13px] text-[#F1F0EC] font-sans font-medium">
+                30-minute discovery call · No obligation · For established PPF and ceramic coating studios.
+              </p>
+              <p className="text-[11px] text-[#7E8876] font-sans">
+                Direct conversation with founder Abuzar Gaur. No aggressive sales pressure.
+              </p>
             </div>
           </div>
         </div>

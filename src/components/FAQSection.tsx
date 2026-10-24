@@ -12,34 +12,24 @@ export const FAQSection: React.FC = () => {
 
   const faqs: FAQItem[] = [
     {
-      question: 'Do you work with detailing studios outside my city?',
+      question: 'What counts as a qualified showroom visit?',
       answer:
-        'Yes. We operate across premium metropolitan markets. However, we enforce strict city-level exclusivity (1–2 studios per territory) to prevent competing internal acquisition pipelines.',
+        "A qualified visit must be a unique vehicle owner who has genuine interest in your studio's PPF or ceramic coating packages, is attributable to Oglity's acquisition system, physically attends your facility, and has their visit tracked in the CRM and confirmed by your team.",
     },
     {
-      question: 'Is this just Meta Ads management?',
+      question: 'Is Oglity just a Meta Ads agency?',
       answer:
-        'No. Meta Ads are only Stage 01 of the AQBC™ system. Traditional agencies stop at generating raw form fills. Oglity builds the end-to-end qualification funnel, WhatsApp CRM automation, speed-to-lead routing, and showroom inspection booking mechanism.',
+        'No. Targeted Meta Ads are only the first step. Traditional agencies stop at delivering raw contact sheets. Oglity manages the complete customer-acquisition pipeline—from buyer qualification and structured follow-ups to showroom appointment bookings and attendance verification.',
     },
     {
-      question: 'What counts as a qualified inspection opportunity?',
+      question: "What if the 15-visit target isn't achieved?",
       answer:
-        'A verified car owner who owns a qualifying vehicle, has confirmed their requirement for PPF or ceramic coating, understands the ₹60K+ package tier, and has scheduled an in-person showroom inspection or consultation.',
+        'Following an initial 14-day testing phase, if the monthly commitment of 15 qualified visits is not reached, we extend your campaign for 15–30 additional days with no extra agency management fees, subject to written agreement. Client-funded advertising continues separately.',
     },
     {
-      question: 'Do you guarantee closed sales?',
+      question: 'Do you guarantee PPF sales or revenue?',
       answer:
-        "We build the pipeline and guarantee delivery of agreed qualified inspection opportunities. The final sale and installation depends on your studio's in-person inspection, pitch, and service reputation.",
-    },
-    {
-      question: 'How quickly can we start generating bookings?',
-      answer:
-        'Campaigns typically launch within 10 to 14 days. This gives us time to craft high-ticket video creatives, build the custom landing page qualification filter, and hook up your WhatsApp notifications.',
-    },
-    {
-      question: 'Do I need a dedicated sales team?',
-      answer:
-        'No. Our automated WhatsApp and booking system handles the initial questions and schedule coordination, so your existing front-desk or studio manager can simply welcome the customer and inspect the car.',
+        "No. We guarantee qualified physical footfall into your studio bay. The vehicle inspection, technical advice, package presentation, and final sales closing remain the responsibility of your studio's team.",
     },
   ];
 
@@ -50,56 +40,60 @@ export const FAQSection: React.FC = () => {
   return (
     <section
       id="faq"
-      className="relative w-full bg-[#111315] text-[#F1F0EC] py-20 sm:py-28 border-b border-[#252A2E] overflow-hidden"
+      className="relative w-full bg-[#0E1012] text-[#F1F0EC] py-14 sm:py-20 border-b border-[#1E2226] overflow-hidden scroll-mt-20 sm:scroll-mt-24"
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
+        <div className="max-w-2xl mx-auto text-center mb-8 sm:mb-10">
           <SectionHeader
             theme="dark"
             align="center"
-            eyebrow="Common questions"
-            title="Frequently asked questions."
+            eyebrow="FREQUENTLY ASKED QUESTIONS"
+            title="Common Questions About How We Work."
             subtitle={
-              <p className="text-sm sm:text-base lg:text-[17px] text-[#B8BEC4] font-sans leading-relaxed">
-                Clear answers about how we work, who we work with, and what to expect.
+              <p className="text-xs sm:text-sm text-[#B8BEC4] font-sans leading-relaxed">
+                Clear, transparent answers about our customer acquisition system, guarantee terms, and studio expectations.
               </p>
             }
           />
         </div>
 
-        {/* Accordion */}
-        <div className="space-y-3">
+        {/* 4 Clean Accordion Cards */}
+        <div className="space-y-2.5 sm:space-y-3">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
             return (
               <div
                 key={index}
-                className={`border rounded-[6px] transition-colors overflow-hidden ${
-                  isOpen ? 'border-[#C7F000]/60 bg-[#16191C]' : 'border-[#252A2E] bg-[#16191C]/60 hover:border-[#B8BEC4]/40'
+                className={`border rounded-[8px] transition-colors overflow-hidden ${
+                  isOpen
+                    ? 'border-[#C7F000]/60 bg-[#16191D]'
+                    : 'border-[#252A2E] bg-[#14171A] hover:border-[#B8BEC4]/40'
                 }`}
               >
                 <button
                   type="button"
                   onClick={() => toggle(index)}
                   aria-expanded={isOpen}
-                  className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#C7F000]"
+                  className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#C7F000]"
                 >
-                  <span className="font-['Plus_Jakarta_Sans',sans-serif] font-bold text-base sm:text-lg text-[#F1F0EC] tracking-tight">
+                  <span className="font-['Manrope',sans-serif] font-bold text-sm sm:text-base text-[#F1F0EC] tracking-tight">
                     {faq.question}
                   </span>
 
                   <div
-                    className={`w-7 h-7 rounded-[4px] border border-[#252A2E] flex items-center justify-center shrink-0 transition-transform duration-200 ${
-                      isOpen ? 'rotate-180 bg-[#C7F000] text-[#111315] border-[#C7F000]' : 'text-[#B8BEC4]'
+                    className={`w-6 h-6 rounded-[4px] border border-[#252A2E] flex items-center justify-center shrink-0 transition-transform duration-200 ${
+                      isOpen
+                        ? 'rotate-180 bg-[#C7F000] text-[#111315] border-[#C7F000]'
+                        : 'text-[#B8BEC4]'
                     }`}
                   >
-                    <ChevronDown className="w-4 h-4" />
+                    <ChevronDown className="w-3.5 h-3.5" />
                   </div>
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-[#B8BEC4] font-sans leading-relaxed border-t border-[#252A2E]/60 animate-in fade-in duration-200">
+                  <div className="px-4 sm:px-5 pb-5 pt-1 text-xs sm:text-sm text-[#CAD0D6] font-sans leading-relaxed border-t border-[#252A2E]/60 animate-in fade-in duration-200">
                     <p>{faq.answer}</p>
                   </div>
                 )}
@@ -108,10 +102,13 @@ export const FAQSection: React.FC = () => {
           })}
         </div>
 
-        {/* Bottom Note */}
-        <div className="mt-8 pt-4 border-t border-[#252A2E] flex flex-col sm:flex-row items-center justify-between text-xs font-sans text-[#B8BEC4]/70 gap-2">
-          <span>Have a custom question about your studio territory?</span>
-          <span className="text-[#F1F0EC] font-medium">We discuss everything on the Growth Audit call.</span>
+        {/* Access Detailed Guarantee Disclosure Note */}
+        <div className="mt-8 pt-4 border-t border-[#252A2E] text-center text-xs text-[#7E8876] font-sans">
+          <span>Complete written guarantee criteria and measurement guidelines are accessible in Section 5 under </span>
+          <a href="#offer" className="text-[#C7F000] hover:underline font-mono">
+            Guarantee Terms
+          </a>
+          .
         </div>
       </div>
     </section>

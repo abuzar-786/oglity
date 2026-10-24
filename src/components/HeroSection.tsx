@@ -34,10 +34,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
   return (
     <section className="relative w-full bg-[#111315] border-b border-[#252A2E] overflow-hidden">
-      <GridBackground theme="dark" showCoordinates={false} className="py-8 sm:py-12 lg:py-16">
+      <GridBackground theme="dark" showCoordinates={false} className="py-6 sm:py-12 lg:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Eyebrow Tag */}
-          <div className="flex items-center gap-3 mb-3.5 sm:mb-4">
+          <div className="flex items-center gap-3 mb-3 sm:mb-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#252A2E]/60 border border-[#252A2E] rounded-[4px]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#C7F000]" />
               <span className="text-xs font-['Inter',sans-serif] font-bold tracking-[0.14em] text-[#C7F000] uppercase">
@@ -47,7 +47,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           </div>
 
           {/* Main Hero Grid: Left (Headline, Copy, CTAs) & Right (VSL Video) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 xl:gap-12 items-center">
             {/* Left Column: Headline, Subheadline, CTAs, Microcopy */}
             <div className="lg:col-span-7">
               {/* Dominant H1 using Manrope */}
@@ -57,12 +57,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </h1>
 
               {/* Subheadline: Refined copy */}
-              <p className="mt-4 sm:mt-5 text-sm sm:text-base lg:text-[17px] text-[#B8BEC4] max-w-2xl font-['Inter',sans-serif] leading-relaxed">
+              <p className="mt-3.5 sm:mt-5 text-sm sm:text-base lg:text-[17px] text-[#B8BEC4] max-w-2xl font-['Inter',sans-serif] leading-relaxed">
                 We help established PPF and ceramic coating studios attract serious car owners, qualify enquiries, and turn them into showroom visits through targeted ads, structured follow-ups, and appointment coordination.
               </p>
 
-              {/* Primary & Secondary CTAs (Single Arrow Icon Per Button) */}
-              <div className="mt-6 sm:mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+              {/* Primary & Secondary CTAs */}
+              <div className="mt-5 sm:mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
                 <Button
                   variant="primary"
                   size="lg"
@@ -85,7 +85,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </div>
 
               {/* Microcopy beneath CTAs */}
-              <p className="mt-2.5 text-xs text-[#B8BEC4] font-sans">
+              <p className="mt-2 sm:mt-2.5 text-xs text-[#B8BEC4] font-sans">
                 Free 30-minute discovery call · No obligation
               </p>
             </div>
@@ -96,38 +96,42 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
           </div>
 
-          {/* Hero Credibility Metrics: Evenly Distributed Full-Width Proof Strip */}
-          <div className="mt-7 sm:mt-9 lg:mt-10 pt-5 sm:pt-6 border-t border-[#252A2E]">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-5 w-full">
-              {/* Metric 1 */}
-              <div className="p-4 sm:p-5 bg-[#16191C] border border-[#252A2E] rounded-[6px] hover:border-[#B8BEC4]/40 transition-colors">
-                <div className="font-['Space_Grotesk',sans-serif] font-extrabold text-3xl sm:text-4xl text-[#C7F000] tracking-tight leading-none">
-                  300+
+          {/* Hero Credibility Metrics: Compact Two-Column Proof Strip on Both Mobile & Desktop */}
+          <div className="mt-5 sm:mt-8 lg:mt-10 pt-4 sm:pt-6 border-t border-[#252A2E]">
+            <div className="grid grid-cols-2 gap-2.5 sm:gap-5 w-full">
+              {/* Metric 1 (Left) */}
+              <div className="p-3 sm:p-5 bg-[#16191C] border border-[#252A2E] rounded-[6px] hover:border-[#B8BEC4]/40 transition-colors flex flex-col justify-between">
+                <div>
+                  <div className="font-['Space_Grotesk',sans-serif] font-extrabold text-2xl sm:text-3xl lg:text-4xl text-[#C7F000] tracking-tight leading-none">
+                    300+
+                  </div>
+                  <div className="mt-1 sm:mt-2 font-['Inter',sans-serif] font-bold text-[11px] sm:text-xs lg:text-sm text-[#F1F0EC] uppercase tracking-wider leading-snug">
+                    Physical Showroom Visits
+                  </div>
                 </div>
-                <div className="mt-2 font-['Inter',sans-serif] font-bold text-xs sm:text-sm text-[#F1F0EC] uppercase tracking-wider">
-                  Physical Showroom Visits
-                </div>
-                <p className="mt-1 text-xs text-[#B8BEC4] font-sans">
-                  In 3 months, across clients
+                <p className="mt-1 text-[10px] sm:text-xs text-[#B8BEC4] font-sans">
+                  In 3 months<span className="hidden sm:inline">, across clients</span>
                 </p>
               </div>
 
-              {/* Metric 2 */}
-              <div className="p-4 sm:p-5 bg-[#16191C] border border-[#252A2E] rounded-[6px] hover:border-[#B8BEC4]/40 transition-colors">
-                <div className="font-['Space_Grotesk',sans-serif] font-extrabold text-3xl sm:text-4xl text-[#F1F0EC] tracking-tight leading-none">
-                  6
+              {/* Metric 2 (Right) */}
+              <div className="p-3 sm:p-5 bg-[#16191C] border border-[#252A2E] rounded-[6px] hover:border-[#B8BEC4]/40 transition-colors flex flex-col justify-between">
+                <div>
+                  <div className="font-['Space_Grotesk',sans-serif] font-extrabold text-2xl sm:text-3xl lg:text-4xl text-[#F1F0EC] tracking-tight leading-none">
+                    6
+                  </div>
+                  <div className="mt-1 sm:mt-2 font-['Inter',sans-serif] font-bold text-[11px] sm:text-xs lg:text-sm text-[#F1F0EC] uppercase tracking-wider leading-snug">
+                    Detailing Businesses Served
+                  </div>
                 </div>
-                <div className="mt-2 font-['Inter',sans-serif] font-bold text-xs sm:text-sm text-[#F1F0EC] uppercase tracking-wider">
-                  Detailing Businesses Served
-                </div>
-                <p className="mt-1 text-xs text-[#B8BEC4] font-sans">
+                <p className="mt-1 text-[10px] sm:text-xs text-[#B8BEC4] font-sans hidden sm:block">
                   Customer acquisition experience
                 </p>
               </div>
             </div>
 
-            {/* Qualification note beneath metrics */}
-            <p className="mt-3 text-[11px] sm:text-xs text-[#8F969E] font-sans italic leading-relaxed">
+            {/* Accessible Qualification Disclaimer beneath metrics */}
+            <p className="mt-2.5 sm:mt-3 text-xs sm:text-[13px] text-[#B8BEC4] font-sans italic leading-relaxed">
               CRM-tracked and studio-confirmed visits. Not all visits were qualified. Historical results vary.
             </p>
           </div>

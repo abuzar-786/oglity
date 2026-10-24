@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { Navigation } from './components/Navigation';
 import { HeroSection } from './components/HeroSection';
-import { TrustProofSection } from './components/TrustProofSection';
-import { FounderSection } from './components/FounderSection';
+import { TrustSection } from './components/TrustSection';
 import { ProblemSection } from './components/ProblemSection';
 import { AQBCSection } from './components/AQBCSection';
-import { CaseStudiesSection } from './components/CaseStudiesSection';
-import { WhoItsForSection } from './components/WhoItsForSection';
 import { OfferSection } from './components/OfferSection';
 import { FinalCTASection } from './components/FinalCTASection';
 import { FAQSection } from './components/FAQSection';
@@ -63,30 +60,18 @@ export default function App() {
           onExploreSystem={handleScrollToProblem}
         />
 
-        {/* Section 1.5: Founder Authority / Trust (Placed early: HERO -> FOUNDER -> PROOF) */}
-        <FounderSection
-          onQualifyClick={handleScrollToQualification}
-          onExploreSystem={handleScrollToSystem}
-        />
+        {/* Section 2: Merged Trust & Client Results Section (id="results" & id="founder") */}
+        <TrustSection />
 
-        {/* Section 1.8: Dedicated Trust & Proof Section */}
-        <TrustProofSection onQualifyClick={handleScrollToQualification} />
-
-        {/* Section 2: Problem Section (Porcelain background) */}
+        {/* Section 3: Problem Section (Porcelain background) */}
         <ProblemSection />
 
         {/* ================= PART 2 ================= */}
-        {/* Section 3: AQBC System (Dark Graphite background, id="system") */}
+        {/* Section 4: AQBC System (Dark Graphite background, id="system") */}
         <AQBCSection onQualifyClick={handleScrollToQualification} />
 
-        {/* Section 4: Case Studies (id="results", engineering report case files) */}
-        <CaseStudiesSection />
-
         {/* ================= PART 3 ================= */}
-        {/* Section 5: Who This Is For (Porcelain background, id="who-its-for") */}
-        <WhoItsForSection onApplyClick={handleScrollToQualification} />
-
-        {/* Section 9: The Offer & Risk Reversal (Dark Graphite background, id="offer") */}
+        {/* Section 5: The Offer, Commitment & Studio Eligibility (Merged Section, id="offer" & id="who-its-for") */}
         <OfferSection onApplyClick={handleScrollToQualification} />
 
         {/* Section 10: Final CTA & Qualification Form (Dark Graphite background, id="qualification") */}
