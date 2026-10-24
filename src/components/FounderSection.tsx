@@ -258,18 +258,18 @@ export const FounderSection: React.FC<FounderSectionProps> = ({
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#16191C] border border-[#252A2E] rounded-[4px] mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-[#C7F000]" />
             <span className="text-xs font-mono font-bold tracking-wider text-[#C7F000] uppercase">
-              Operator-Led Growth
+              THE PERSON BEHIND OGLITY
             </span>
           </div>
 
           <h2 className="font-['Manrope',sans-serif] font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight text-[#F1F0EC] leading-[1.12]">
-            BUILT BY AN OPERATOR.
+            Your Craft Is Car Protection.
             <br />
-            BUILT FOR OPERATORS.
+            <span className="text-[#C7F000]">Mine Is Customer Acquisition.</span>
           </h2>
 
           <p className="mt-4 text-sm sm:text-base lg:text-lg text-[#B8BEC4] font-sans leading-relaxed">
-            Oglity was built around a simple belief: premium studios don't need more random leads. They need a customer-acquisition system that creates qualified showroom opportunities.
+            I'm Abuzar Gaur, founder of Oglity. Having worked with 6 car detailing and protection businesses, I've focused my work on helping studios attract more relevant enquiries and turn customer interest into real sales opportunities.
           </p>
         </div>
 
@@ -319,23 +319,48 @@ export const FounderSection: React.FC<FounderSectionProps> = ({
           <div className="lg:col-span-7 space-y-5">
             <div className="inline-flex items-center gap-2 text-xs font-mono tracking-wider text-[#C7F000] font-bold uppercase">
               <span className="w-1.5 h-1.5 rounded-full bg-[#C7F000]" />
-              <span>FOUNDER / OGLITY</span>
+              <span>THE PERSON BEHIND OGLITY</span>
             </div>
 
-            <h3 className="font-['Manrope',sans-serif] font-bold text-2xl sm:text-3xl text-[#F1F0EC] tracking-tight leading-tight">
-              THE PERSON BEHIND THE SYSTEM.
+            <h3 className="font-['Manrope',sans-serif] font-extrabold text-2xl sm:text-3xl text-[#F1F0EC] tracking-tight leading-tight">
+              Your Craft Is Car Protection.{' '}
+              <span className="text-[#C7F000]">Mine Is Customer Acquisition.</span>
             </h3>
 
             <div className="space-y-4 text-xs sm:text-sm lg:text-[15px] text-[#B8BEC4] font-sans leading-relaxed">
+              <p className="text-base text-[#F1F0EC] font-semibold">
+                I'm Abuzar Gaur, founder of Oglity.
+              </p>
+
               <p>
-                Abuzar Gaur started Oglity after seeing how high-ticket PPF and ceramic coating studios were getting burned by generic lead generation. Most marketing agencies deliver contact sheets filled with price shoppers who ghost the studio after receiving a quote.
+                Having worked with 6 car detailing and protection businesses, I've focused my work on helping studios attract more relevant enquiries and turn customer interest into real sales opportunities.
               </p>
+
+              <p className="text-xs font-mono font-bold tracking-wider text-[#C7F000] uppercase pt-1">
+                Here's something I strongly believe:
+              </p>
+
+              <div className="p-4 sm:p-5 bg-[#16191C] border-l-2 border-[#C7F000] border-y border-r border-[#252A2E] rounded-r-[4px]">
+                <p className="text-sm sm:text-base font-bold text-[#F1F0EC] leading-snug">
+                  Premium craftsmanship deserves premium customers—not a constant race to offer the cheapest price.
+                </p>
+              </div>
+
               <p>
-                Having spent time inside active automotive facilities and studying sales conversations with luxury car owners, he engineered a process built around actual showroom economics: pre-screening prospects by vehicle condition, timeline, and package value before they ever speak with a sales advisor.
+                That's why Oglity focuses on more than generating leads.
               </p>
-              <p className="text-[#F1F0EC] font-medium">
-                The objective is straightforward: protect your shop's time, eliminate low-intent inquiries, and deliver verified showroom inspections for ₹60K+ packages.
+
+              <p>
+                Through our AQBC™ Customer Acquisition System, we connect targeted advertising, buyer qualification, follow-ups, appointment booking and tracking into one structured acquisition process.
               </p>
+
+              <p>
+                So your team can focus on what it does best: delivering quality PPF and ceramic coating services and converting suitable showroom visitors into customers.
+              </p>
+
+              <div className="p-3.5 bg-[#16191C] border border-[#252A2E] rounded-[4px] text-xs sm:text-sm font-bold text-[#C7F000]">
+                We handle customer acquisition. You focus on delivering exceptional workmanship.
+              </div>
             </div>
 
             <div className="pt-2">

@@ -1,131 +1,135 @@
 import React from 'react';
-import { ArrowUpRight, ChevronDown } from 'lucide-react';
+import { ArrowUpRight, ArrowDown } from 'lucide-react';
 import { Button } from './ui/Button';
-import { Metric } from './ui/Metric';
 import { GridBackground } from './ui/GridBackground';
 import { VSLVideo } from './ui/VSLVideo';
 
 interface HeroSectionProps {
-  onOpenAuditModal: () => void;
-  onExploreSystem: () => void;
+  onOpenAuditModal?: () => void;
+  onExploreSystem?: () => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
   onOpenAuditModal,
   onExploreSystem,
 }) => {
-  const metricsData = [
-    {
-      id: 'clients',
-      value: '6',
-      label: 'STUDIO CLIENTS',
-      sublabel: 'Specialized detailing & PPF facilities',
-      isLime: false,
-    },
-    {
-      id: 'leads',
-      value: '300+',
-      label: 'STUDIO VISITS GENERATED',
-      sublabel: 'Verified in-bay showroom inspections',
-      isLime: true,
-    },
-    {
-      id: 'package',
-      value: '₹60K+',
-      label: 'HIGH-TICKET PACKAGE VALUE',
-      sublabel: 'Full-body PPF & multi-year ceramic',
-      isLime: false,
-    },
-  ];
+  const handleScrollToCalendly = () => {
+    if (onOpenAuditModal) {
+      onOpenAuditModal();
+    }
+    const el = document.getElementById('qualification');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const handleScrollToAQBC = () => {
+    const el = document.getElementById('system');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else if (onExploreSystem) {
+      onExploreSystem();
+    }
+  };
 
   return (
     <section className="relative w-full bg-[#111315] border-b border-[#252A2E] overflow-hidden">
-      <GridBackground theme="dark" showCoordinates={false} className="py-12 sm:py-18 lg:py-22">
+      <GridBackground theme="dark" showCoordinates={false} className="py-8 sm:py-12 lg:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Eyebrow tag */}
-          <div className="flex items-center gap-3 mb-4 sm:mb-6">
+          {/* Eyebrow Tag */}
+          <div className="flex items-center gap-3 mb-3.5 sm:mb-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#252A2E]/60 border border-[#252A2E] rounded-[4px]">
-              <span className="w-1.5 h-1.5 bg-[#C7F000]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C7F000]" />
               <span className="text-xs font-['Inter',sans-serif] font-bold tracking-[0.14em] text-[#C7F000] uppercase">
-                FOR PREMIUM PPF &amp; CERAMIC STUDIOS
+                FOR PREMIUM PPF &amp; CERAMIC COATING STUDIOS
               </span>
             </div>
           </div>
 
-          {/* Main Hero Grid: Left (Headline & Content) & Right (VSL Video) */}
+          {/* Main Hero Grid: Left (Headline, Copy, CTAs) & Right (VSL Video) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center">
-            {/* Left Column: Headline, Subheadline, CTAs, Clarifications */}
+            {/* Left Column: Headline, Subheadline, CTAs, Microcopy */}
             <div className="lg:col-span-7">
               {/* Dominant H1 using Manrope */}
-              <h1 className="font-['Manrope',sans-serif] font-bold tracking-[-0.025em] leading-[1.12] text-[#F1F0EC] text-3xl sm:text-5xl lg:text-[46px] xl:text-[52px]">
-                Get <span className="text-[#C7F000]">20+</span> More Qualified
-                <br />
-                Inspection Opportunities
-                <br />
-                Every Month.
+              <h1 className="font-['Manrope',sans-serif] font-extrabold tracking-[-0.03em] leading-[1.14] text-[#F1F0EC] text-3xl sm:text-4xl md:text-5xl lg:text-[44px] xl:text-[48px]">
+                Stop Chasing Price Shoppers.{' '}
+                <span className="text-[#C7F000]">Start Getting Qualified Showroom Visits.</span>
               </h1>
 
-              {/* Subheadline: Concise */}
-              <p className="mt-5 sm:mt-6 text-base sm:text-lg text-[#B8BEC4] max-w-2xl font-['Inter',sans-serif] leading-relaxed">
-                Oglity helps ₹60K+ PPF and ceramic coating studios attract, qualify and book serious car owners using our AQBC™ customer-acquisition system.
+              {/* Subheadline: Refined copy */}
+              <p className="mt-4 sm:mt-5 text-sm sm:text-base lg:text-[17px] text-[#B8BEC4] max-w-2xl font-['Inter',sans-serif] leading-relaxed">
+                We help established PPF and ceramic coating studios attract serious car owners, qualify enquiries, and turn them into showroom visits through targeted ads, structured follow-ups, and appointment coordination.
               </p>
 
-              {/* CTAs */}
-              <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+              {/* Primary & Secondary CTAs (Single Arrow Icon Per Button) */}
+              <div className="mt-6 sm:mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
                 <Button
                   variant="primary"
                   size="lg"
-                  onClick={onOpenAuditModal}
+                  onClick={handleScrollToCalendly}
                   icon={<ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 text-[#111315]" />}
-                  className="!h-12 sm:!h-14 !px-6 sm:!px-8 text-xs sm:text-[14px] font-bold"
+                  className="!h-12 sm:!h-14 !px-6 sm:!px-8 text-xs sm:text-[14px] font-bold justify-center"
                 >
-                  SEE IF YOUR STUDIO QUALIFIES →
+                  SEE IF YOUR STUDIO QUALIFIES
                 </Button>
 
                 <Button
                   variant="secondary"
                   size="lg"
-                  onClick={onExploreSystem}
-                  icon={<ChevronDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F1F0EC]" />}
-                  className="!h-12 sm:!h-14 !px-5 sm:!px-7 text-xs sm:text-[14px]"
+                  onClick={handleScrollToAQBC}
+                  icon={<ArrowDown className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F1F0EC]" />}
+                  className="!h-12 sm:!h-14 !px-5 sm:!px-7 text-xs sm:text-[14px] justify-center"
                 >
-                  SEE HOW IT WORKS
+                  SEE HOW AQBC™ WORKS
                 </Button>
               </div>
 
-              {/* Under CTA details */}
-              <div className="mt-5 pt-3.5 border-t border-[#252A2E] space-y-2">
-                {/* Clarification Box */}
-                <div className="p-3 bg-[#16191C] border border-[#252A2E] rounded-[4px] text-xs font-['Inter',sans-serif] text-[#B8BEC4] space-y-0.5">
-                  <div className="font-bold text-[#F1F0EC] tracking-wider text-[11px] uppercase">
-                    WHAT COUNTS AS A QUALIFIED OPPORTUNITY?
-                  </div>
-                  <p className="text-[#B8BEC4]/90 text-[12px] leading-relaxed">
-                    A prospect who meets the agreed criteria and books an inspection with your studio.
-                  </p>
-                </div>
-              </div>
+              {/* Microcopy beneath CTAs */}
+              <p className="mt-2.5 text-xs text-[#B8BEC4] font-sans">
+                Free 30-minute discovery call · No obligation
+              </p>
             </div>
 
-            {/* Right Column: VSL Video Section */}
+            {/* Right Column: VSL Video Section (Preserved) */}
             <div className="lg:col-span-5 w-full flex items-center justify-center">
               <VSLVideo initialVideoSrc="/videos/vsl.mp4" />
             </div>
           </div>
 
-          {/* Hero Trust Strip: Compact Proof Strip */}
-          <div className="mt-10 sm:mt-14 lg:mt-16">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-5">
-              {metricsData.map((m) => (
-                <Metric
-                  key={m.id}
-                  value={m.value}
-                  label={m.label}
-                  sublabel={m.sublabel}
-                  isLime={m.isLime}
-                />
-              ))}
+          {/* Hero Credibility Metrics: Evenly Distributed Full-Width Proof Strip */}
+          <div className="mt-7 sm:mt-9 lg:mt-10 pt-5 sm:pt-6 border-t border-[#252A2E]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-5 w-full">
+              {/* Metric 1 */}
+              <div className="p-4 sm:p-5 bg-[#16191C] border border-[#252A2E] rounded-[6px] hover:border-[#B8BEC4]/40 transition-colors">
+                <div className="font-['Space_Grotesk',sans-serif] font-extrabold text-3xl sm:text-4xl text-[#C7F000] tracking-tight leading-none">
+                  300+
+                </div>
+                <div className="mt-2 font-['Inter',sans-serif] font-bold text-xs sm:text-sm text-[#F1F0EC] uppercase tracking-wider">
+                  Physical Showroom Visits
+                </div>
+                <p className="mt-1 text-xs text-[#B8BEC4] font-sans">
+                  In 3 months, across clients
+                </p>
+              </div>
+
+              {/* Metric 2 */}
+              <div className="p-4 sm:p-5 bg-[#16191C] border border-[#252A2E] rounded-[6px] hover:border-[#B8BEC4]/40 transition-colors">
+                <div className="font-['Space_Grotesk',sans-serif] font-extrabold text-3xl sm:text-4xl text-[#F1F0EC] tracking-tight leading-none">
+                  6
+                </div>
+                <div className="mt-2 font-['Inter',sans-serif] font-bold text-xs sm:text-sm text-[#F1F0EC] uppercase tracking-wider">
+                  Detailing Businesses Served
+                </div>
+                <p className="mt-1 text-xs text-[#B8BEC4] font-sans">
+                  Customer acquisition experience
+                </p>
+              </div>
             </div>
+
+            {/* Qualification note beneath metrics */}
+            <p className="mt-3 text-[11px] sm:text-xs text-[#8F969E] font-sans italic leading-relaxed">
+              CRM-tracked and studio-confirmed visits. Not all visits were qualified. Historical results vary.
+            </p>
           </div>
         </div>
       </GridBackground>

@@ -5,9 +5,7 @@ import { TrustProofSection } from './components/TrustProofSection';
 import { FounderSection } from './components/FounderSection';
 import { ProblemSection } from './components/ProblemSection';
 import { AQBCSection } from './components/AQBCSection';
-import { DifferenceSection } from './components/DifferenceSection';
 import { CaseStudiesSection } from './components/CaseStudiesSection';
-import { TransitionSection } from './components/TransitionSection';
 import { WhoItsForSection } from './components/WhoItsForSection';
 import { OfferSection } from './components/OfferSection';
 import { FinalCTASection } from './components/FinalCTASection';
@@ -81,17 +79,11 @@ export default function App() {
         {/* Section 3: AQBC System (Dark Graphite background, id="system") */}
         <AQBCSection onQualifyClick={handleScrollToQualification} />
 
-        {/* Section 4: The Difference (Porcelain background) */}
-        <DifferenceSection />
-
-        {/* Section 6: Case Studies (id="results", engineering report case files) */}
+        {/* Section 4: Case Studies (id="results", engineering report case files) */}
         <CaseStudiesSection />
 
-        {/* Section 7: Visual Transition (Dark-to-light transition with primary CTA) */}
-        <TransitionSection onQualifyClick={handleScrollToQualification} />
-
         {/* ================= PART 3 ================= */}
-        {/* Section 8: Who This Is For (Porcelain background, id="who-its-for") */}
+        {/* Section 5: Who This Is For (Porcelain background, id="who-its-for") */}
         <WhoItsForSection onApplyClick={handleScrollToQualification} />
 
         {/* Section 9: The Offer & Risk Reversal (Dark Graphite background, id="offer") */}

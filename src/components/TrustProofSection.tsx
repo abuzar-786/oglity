@@ -10,21 +10,21 @@ interface TrustProofSectionProps {
 export const TrustProofSection: React.FC<TrustProofSectionProps> = ({ onQualifyClick }) => {
   const metrics = [
     {
-      value: '6',
-      label: 'CLIENT STUDIOS',
-      context: 'Specialized detailing & PPF facilities currently partnered with Oglity.',
-      isLime: false,
-    },
-    {
       value: '300+',
-      label: 'STUDIO VISITS',
-      context: 'Pre-screened vehicle owners booking ₹60K+ paint protection inspections.',
+      label: 'Physical Showroom Visits in 3 Months',
+      context: 'Recorded through CRM tracking and confirmed by client studios across our engagements.',
       isLime: true,
     },
     {
-      value: '₹60K+',
-      label: 'PACKAGE VALUE',
-      context: 'Full-body PPF & multi-year ceramic coating package floor.',
+      value: '6',
+      label: 'Automotive Detailing & Protection Businesses Served',
+      context: 'Hands-on experience managing ads, buyer qualification, follow-ups, appointment bookings and tracking.',
+      isLime: false,
+    },
+    {
+      value: '20+',
+      label: 'Qualified Showroom Visits in a Single Month',
+      context: 'Reported by one client studio and shared anonymously with permission.',
       isLime: false,
     },
   ];
@@ -37,13 +37,20 @@ export const TrustProofSection: React.FC<TrustProofSectionProps> = ({ onQualifyC
           <SectionHeader
             theme="dark"
             align="center"
-            eyebrow="Proof / Performance"
-            title="Built for the way premium studios actually grow."
+            eyebrow="REAL RESULTS. BEYOND LEAD GENERATION."
+            title={
+              <span>
+                We Don't Just Generate Leads.{' '}
+                <span className="text-[#C7F000]">We Track Who Actually Shows Up.</span>
+              </span>
+            }
             subtitle={
               <div className="space-y-2 text-sm sm:text-base lg:text-[17px] text-[#B8BEC4] leading-relaxed font-['Inter',sans-serif]">
-                <p>We don't optimize for cheap leads.</p>
+                <p>
+                  Getting enquiries is one thing. Getting car owners to physically visit your studio is another.
+                </p>
                 <p className="text-[#F1F0EC] font-medium">
-                  We build the acquisition system around qualified car owners and showroom inspection opportunities.
+                  At Oglity, we focus on the entire customer acquisition journey—from attracting serious buyers and qualifying enquiries to managing follow-ups, booking appointments and tracking actual showroom attendance.
                 </p>
               </div>
             }
@@ -72,6 +79,11 @@ export const TrustProofSection: React.FC<TrustProofSectionProps> = ({ onQualifyC
               </p>
             </div>
           ))}
+        </div>
+
+        {/* Mandatory Transparency Disclaimer */}
+        <div className="mt-4 p-3.5 bg-[#16191C]/70 border border-[#252A2E] rounded-[4px] text-center text-xs text-[#B8BEC4]/80 font-['Inter',sans-serif] italic leading-relaxed">
+          *Results reflect past client engagements. The 300+ figure includes both qualified and other physical showroom visitors. The 20+ figure is an individual client-reported result, not an additional amount to add to the aggregate total. Individual results vary.*
         </div>
 
         {/* REAL EVIDENCE AREA: Client Proof Asset Drop Zone */}
