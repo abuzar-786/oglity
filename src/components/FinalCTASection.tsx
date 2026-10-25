@@ -48,7 +48,8 @@ export const FinalCTASection: React.FC = () => {
 
         if (typeof window.fbq === 'function') {
           window.fbq('track', 'Schedule');
-          console.log('[Meta Pixel] Successfully fired: fbq("track", "Schedule")');
+          window.fbq('track', 'CompleteRegistration');
+          console.log('[Meta Pixel] Successfully fired: fbq("track", "Schedule") & fbq("track", "CompleteRegistration")');
         } else {
           console.warn('[Meta Pixel] window.fbq is not available on window object.');
         }

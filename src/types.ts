@@ -62,3 +62,13 @@ export interface GrowthAuditFormData {
   averagePackagePrice: string;
   currentMonthlyLeads: string;
 }
+
+declare global {
+  interface Window {
+    Calendly?: {
+      initInlineWidgets: () => void;
+    };
+    fbq?: (action: string, eventName: string, params?: Record<string, any>) => void;
+  }
+}
+

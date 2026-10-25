@@ -47,6 +47,10 @@ export const GrowthAuditModal: React.FC<GrowthAuditModalProps> = ({ isOpen, onCl
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'CompleteRegistration');
+      console.log('[Meta Pixel] Successfully fired: fbq("track", "CompleteRegistration")');
+    }
     setStep('success');
   };
 
