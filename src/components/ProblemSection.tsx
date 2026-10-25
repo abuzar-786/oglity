@@ -25,7 +25,7 @@ export const ProblemSection: React.FC = () => {
   ];
 
   return (
-    <section id="problem" className="relative w-full bg-[#F7F8F6] text-[#111315] py-10 sm:py-18 lg:py-20 border-b border-[#E3E6DF] overflow-hidden">
+    <section id="problem" className="relative w-full bg-[#F7F8F6] text-[#111315] py-10 sm:py-18 lg:py-20 border-b border-[#E3E6DF] overflow-hidden scroll-mt-20 sm:scroll-mt-24">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-2xl mx-auto text-center mb-5 sm:mb-10">

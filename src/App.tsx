@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Navigation } from './components/Navigation';
 import { HeroSection } from './components/HeroSection';
-import { TrustSection } from './components/TrustSection';
+import { FounderSection } from './components/FounderSection';
 import { ProblemSection } from './components/ProblemSection';
 import { AQBCSection } from './components/AQBCSection';
 import { OfferSection } from './components/OfferSection';
@@ -60,8 +60,8 @@ export default function App() {
           onExploreSystem={handleScrollToProblem}
         />
 
-        {/* Section 2: Merged Trust & Client Results Section (id="results" & id="founder") */}
-        <TrustSection />
+        {/* Section 2: Founder Section (id="results" & id="founder") */}
+        <FounderSection onExploreSystem={handleScrollToSystem} />
 
         {/* Section 3: Problem Section (Porcelain background) */}
         <ProblemSection />

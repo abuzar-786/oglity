@@ -4,7 +4,7 @@ export const TrustSection: React.FC = () => {
   return (
     <section
       id="results"
-      className="relative w-full bg-[#0E1012] text-[#F1F0EC] py-14 sm:py-18 lg:py-20 border-b border-[#252A2E] overflow-hidden"
+      className="relative w-full bg-[#0E1012] text-[#F1F0EC] py-14 sm:py-18 lg:py-20 border-b border-[#252A2E] overflow-hidden scroll-mt-20 sm:scroll-mt-24"
     >
       {/* Anchor for founder links */}
       <div id="founder" className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

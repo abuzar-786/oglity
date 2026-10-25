@@ -22,9 +22,9 @@ export const FAQSection: React.FC = () => {
         'No. Targeted Meta Ads are only the first step. Traditional agencies stop at delivering raw contact sheets. Oglity manages the complete customer-acquisition pipeline—from buyer qualification and structured follow-ups to showroom appointment bookings and attendance verification.',
     },
     {
-      question: "What if the 15-visit target isn't achieved?",
+      question: "What if the 20-visit target isn't achieved?",
       answer:
-        'Following an initial 14-day testing phase, if the monthly commitment of 15 qualified visits is not reached, we extend your campaign for 15–30 additional days with no extra agency management fees, subject to written agreement. Client-funded advertising continues separately.',
+        'Following an initial 14-day testing phase, if the monthly commitment of 20 qualified visits is not reached, we extend your campaign for 15–30 additional days with no extra agency management fees, subject to written agreement. Client-funded advertising continues separately.',
     },
     {
       question: 'Do you guarantee PPF sales or revenue?',

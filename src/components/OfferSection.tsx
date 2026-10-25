@@ -38,7 +38,7 @@ export const OfferSection: React.FC<OfferSectionProps> = ({ onApplyClick }) => {
     },
     {
       title: '15–30 Day Remedy Extension',
-      text: 'If the 15-visit target is not achieved, campaigns extend for 15–30 days with no extra agency management fees. Duration is determined case by case and documented in writing.',
+      text: 'If the 20-visit target is not achieved, campaigns extend for 15–30 days with no extra agency management fees. Duration is determined case by case and documented in writing.',
     },
     {
       title: 'Advertising Continuity',
@@ -70,7 +70,7 @@ export const OfferSection: React.FC<OfferSectionProps> = ({ onApplyClick }) => {
           </div>
 
           <h2 className="font-['Manrope',sans-serif] font-extrabold text-2xl sm:text-3xl md:text-4xl tracking-tight leading-[1.14] text-[#F1F0EC]">
-            15 Qualified Showroom Visits.{' '}
+            20 Qualified Showroom Visits.{' '}
             <span className="text-[#C7F000]">Not Just Bookings.</span>
           </h2>
 
@@ -93,7 +93,7 @@ export const OfferSection: React.FC<OfferSectionProps> = ({ onApplyClick }) => {
                 </span>
 
                 <div className="font-['Space_Grotesk',sans-serif] font-extrabold text-5xl sm:text-6xl text-[#C7F000] leading-none tracking-tight mt-2">
-                  15
+                  20
                 </div>
 
                 <h3 className="font-['Manrope',sans-serif] font-bold text-base sm:text-lg text-[#F1F0EC] tracking-tight mt-2.5">

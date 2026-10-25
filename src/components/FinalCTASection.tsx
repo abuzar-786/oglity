@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Search, TrendingUp, CheckCircle2, Clock } from 'lucide-react';
 import { GridBackground } from './ui/GridBackground';
 
@@ -7,12 +7,57 @@ declare global {
     Calendly?: {
       initInlineWidgets: () => void;
     };
+    fbq?: (action: string, eventName: string, params?: Record<string, any>) => void;
   }
 }
 
 export const FinalCTASection: React.FC = () => {
+  const hasTrackedBookingRef = useRef(false);
+
   useEffect(() => {
-    // Dynamically mount Calendly external widget script
+    // 1. Listen for Calendly's postMessage events
+    const handleCalendlyMessage = (e: MessageEvent) => {
+      // Verify origin is https://calendly.com
+      if (e.origin !== 'https://calendly.com') {
+        return;
+      }
+
+      let data = e.data;
+      if (typeof data === 'string') {
+        try {
+          data = JSON.parse(data);
+        } catch {
+          return;
+        }
+      }
+
+      if (!data || typeof data !== 'object') {
+        return;
+      }
+
+      // Fire only when appointment is confirmed (calendly.event_scheduled)
+      // Ignores date/time selection, viewing form, or opening widget
+      if (data.event === 'calendly.event_scheduled') {
+        if (hasTrackedBookingRef.current) {
+          console.log('[Meta Pixel] Calendly booking already tracked during this session.');
+          return;
+        }
+
+        hasTrackedBookingRef.current = true;
+        console.log('[Meta Pixel] Confirmed Calendly booking detected (calendly.event_scheduled):', data);
+
+        if (typeof window.fbq === 'function') {
+          window.fbq('track', 'Schedule');
+          console.log('[Meta Pixel] Successfully fired: fbq("track", "Schedule")');
+        } else {
+          console.warn('[Meta Pixel] window.fbq is not available on window object.');
+        }
+      }
+    };
+
+    window.addEventListener('message', handleCalendlyMessage);
+
+    // 2. Dynamically mount Calendly external widget script
     const script = document.createElement('script');
     script.src = 'https://assets.calendly.com/assets/external/widget.js';
     script.async = true;
@@ -29,6 +74,7 @@ export const FinalCTASection: React.FC = () => {
     }
 
     return () => {
+      window.removeEventListener('message', handleCalendlyMessage);
       try {
         if (script.parentNode) {
           script.parentNode.removeChild(script);

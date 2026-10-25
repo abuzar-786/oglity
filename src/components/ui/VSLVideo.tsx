@@ -6,11 +6,19 @@ interface VSLVideoProps {
   className?: string;
 }
 
+function getYouTubeId(url?: string): string | null {
+  if (!url) return null;
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+  return match ? match[1] : null;
+}
+
 export const VSLVideo: React.FC<VSLVideoProps> = ({
-  initialVideoSrc = '/videos/vsl.mp4',
+  initialVideoSrc = 'https://youtu.be/IQzREQoHUhM',
   className = '',
 }) => {
   const [videoSrc] = useState<string>(initialVideoSrc);
+  const youtubeId = getYouTubeId(videoSrc);
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -21,6 +29,7 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
 
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Auto-hide controls when playing
@@ -36,10 +45,74 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
     }
   };
 
+  // YouTube Iframe PostMessage helper
+  const sendYouTubeCommand = (func: string, args: unknown[] = []) => {
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      iframeRef.current.contentWindow.postMessage(
+        JSON.stringify({
+          event: 'command',
+          func,
+          args,
+        }),
+        '*'
+      );
+    }
+  };
+
+  // Listen to messages from YouTube iframe to keep state in sync
+  useEffect(() => {
+    if (!youtubeId) return;
+
+    const handleMessage = (event: MessageEvent) => {
+      if (typeof event.data === 'string') {
+        try {
+          const data = JSON.parse(event.data);
+          // YouTube Player State Change (1 = playing, 2 = paused, 0 = ended)
+          if (data.event === 'onStateChange') {
+            if (data.info === 1) {
+              setIsPlaying(true);
+              setHasStartedPlaying(true);
+            } else if (data.info === 2 || data.info === 0) {
+              setIsPlaying(false);
+            }
+          } else if (data.event === 'infoDelivery' && data.info) {
+            if (typeof data.info.currentTime === 'number') {
+              setCurrentTime(data.info.currentTime);
+            }
+            if (typeof data.info.duration === 'number' && data.info.duration > 0) {
+              setDuration(data.info.duration);
+            }
+          }
+        } catch {
+          // Ignore non-JSON postMessages
+        }
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, [youtubeId]);
+
+  // Update progress calculation
+  useEffect(() => {
+    if (duration > 0) {
+      setProgress((currentTime / duration) * 100);
+    }
+  }, [currentTime, duration]);
+
   const togglePlay = (e?: React.MouseEvent) => {
     e?.stopPropagation();
 
-    if (videoRef.current) {
+    if (youtubeId) {
+      if (isPlaying) {
+        sendYouTubeCommand('pauseVideo');
+        setIsPlaying(false);
+      } else {
+        sendYouTubeCommand('playVideo');
+        setIsPlaying(true);
+        setHasStartedPlaying(true);
+      }
+    } else if (videoRef.current) {
       if (isPlaying) {
         videoRef.current.pause();
         setIsPlaying(false);
@@ -57,7 +130,15 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
 
   const toggleMute = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (videoRef.current) {
+    if (youtubeId) {
+      if (isMuted) {
+        sendYouTubeCommand('unMute');
+        setIsMuted(false);
+      } else {
+        sendYouTubeCommand('mute');
+        setIsMuted(true);
+      }
+    } else if (videoRef.current) {
       videoRef.current.muted = !isMuted;
       setIsMuted(!isMuted);
     }
@@ -65,7 +146,13 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
 
   const handleRestart = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (videoRef.current) {
+    if (youtubeId) {
+      sendYouTubeCommand('seekTo', [0, true]);
+      sendYouTubeCommand('playVideo');
+      setIsPlaying(true);
+      setProgress(0);
+      setCurrentTime(0);
+    } else if (videoRef.current) {
       videoRef.current.currentTime = 0;
       videoRef.current.play().catch(() => {});
       setIsPlaying(true);
@@ -73,29 +160,18 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
     }
   };
 
-  const handleTimeUpdate = () => {
-    if (videoRef.current) {
-      const current = videoRef.current.currentTime;
-      const total = videoRef.current.duration || 1;
-      setCurrentTime(current);
-      setDuration(total);
-      setProgress((current / total) * 100);
-    }
-  };
-
-  const handleLoadedMetadata = () => {
-    if (videoRef.current) {
-      setDuration(videoRef.current.duration || 0);
-    }
-  };
-
   const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
-    if (videoRef.current && duration > 0) {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const percent = Math.max(0, Math.min(1, clickX / rect.width));
-      const targetTime = percent * duration;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const percent = Math.max(0, Math.min(1, clickX / rect.width));
+    const targetTime = percent * duration;
+
+    if (youtubeId) {
+      sendYouTubeCommand('seekTo', [targetTime, true]);
+      setCurrentTime(targetTime);
+      setProgress(percent * 100);
+    } else if (videoRef.current && duration > 0) {
       videoRef.current.currentTime = targetTime;
       setProgress(percent * 100);
       setCurrentTime(targetTime);
@@ -125,7 +201,7 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onClick={togglePlay}
-      className={`relative w-full aspect-video rounded-[6px] overflow-hidden border border-[#252A2E] bg-[#0E1012] group shadow-2xl transition-all duration-300 hover:border-[#C7F000]/40 select-none ${className}`}
+      className={`relative w-full aspect-video rounded-[8px] overflow-hidden border border-[#252A2E] bg-[#0E1012] group shadow-2xl transition-all duration-300 hover:border-[#C7F000]/40 select-none cursor-pointer ${className}`}
     >
       {/* Decorative technical corner accents */}
       <div className="absolute top-2 left-2 w-2.5 h-2.5 border-t border-l border-[#C7F000]/60 pointer-events-none z-30" />
@@ -133,21 +209,42 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
       <div className="absolute bottom-2 left-2 w-2.5 h-2.5 border-b border-l border-[#C7F000]/60 pointer-events-none z-30" />
       <div className="absolute bottom-2 right-2 w-2.5 h-2.5 border-b border-r border-[#C7F000]/60 pointer-events-none z-30" />
 
-      {/* Native HTML5 Video Element (100% Natural Unzoomed 16:9 Aspect Ratio) */}
-      <video
-        ref={videoRef}
-        src={videoSrc}
-        playsInline
-        preload="metadata"
-        onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={handleLoadedMetadata}
-        onEnded={() => setIsPlaying(false)}
-        className="w-full h-full object-cover"
-      />
+      {/* YOUTUBE EMBED PLAYER (Clean, unzoomed natural 16:9, controls disabled via controls=0) */}
+      {youtubeId ? (
+        <iframe
+          ref={iframeRef}
+          src={`https://www.youtube-nocookie.com/embed/${youtubeId}?enablejsapi=1&controls=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&disablekb=1&fs=0`}
+          title="Oglity Studio Acquisition VSL"
+          className="w-full h-full border-0 relative z-10 pointer-events-none"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        />
+      ) : (
+        <video
+          ref={videoRef}
+          src={videoSrc}
+          playsInline
+          preload="metadata"
+          onTimeUpdate={() => {
+            if (videoRef.current) {
+              const current = videoRef.current.currentTime;
+              const total = videoRef.current.duration || 1;
+              setCurrentTime(current);
+              setDuration(total);
+            }
+          }}
+          onLoadedMetadata={() => {
+            if (videoRef.current) {
+              setDuration(videoRef.current.duration || 0);
+            }
+          }}
+          onEnded={() => setIsPlaying(false)}
+          className="w-full h-full object-cover"
+        />
+      )}
 
-      {/* Fallback / Poster Screen (Shown before playback starts) */}
+      {/* Branded Poster Cover Screen (Shown before playback starts - hides any YouTube title/channel header) */}
       {!hasStartedPlaying && (
-        <div className="absolute inset-0 flex items-center justify-center bg-[#0D0F11] overflow-hidden select-none z-10 pointer-events-none">
+        <div className="absolute inset-0 flex items-center justify-center bg-[#0D0F11] overflow-hidden select-none z-20 pointer-events-none">
           {/* Hexagonal Honeycomb Detailing Studio Lights Simulation */}
           <div className="absolute inset-0 opacity-25">
             <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -242,21 +339,18 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
         </div>
       )}
 
-      {/* Transparent Click Shield (Captures clicks anywhere on video for instant Play/Pause) */}
-      <div className="absolute inset-0 z-10 cursor-pointer" />
-
       {/* Center Play Button Overlay (Visible when paused) */}
       {!isPlaying && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/35 backdrop-blur-[1.5px] z-20 transition-opacity pointer-events-none">
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-[1px] z-20 transition-opacity pointer-events-none">
           <div className="relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full bg-[#C7F000] text-[#111315] shadow-[0_0_35px_rgba(199,240,0,0.5)] transition-transform duration-200 group-hover:scale-110">
             <Play className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 fill-[#111315] translate-x-0.5" />
           </div>
         </div>
       )}
 
-      {/* Custom Sleek Oglity Video Controls Bar */}
+      {/* Custom Sleek Oglity Video Controls Bar (Replaces all YouTube UI) */}
       <div
-        className={`absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent pt-8 pb-3 px-3 sm:px-4 z-30 transition-opacity duration-300 ${
+        className={`absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent pt-8 pb-3 px-3 sm:px-4 z-30 transition-opacity duration-300 ${
           showControls || !isPlaying ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={(e) => e.stopPropagation()}
