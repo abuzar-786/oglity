@@ -58,7 +58,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
               {/* Subheadline: Refined copy */}
               <p className="mt-3.5 sm:mt-5 text-sm sm:text-base lg:text-[17px] text-[#B8BEC4] max-w-2xl font-['Inter',sans-serif] leading-relaxed">
-                We help established PPF and ceramic coating studios attract serious car owners, qualify enquiries, and turn them into showroom visits through targeted ads, structured follow-ups, and appointment coordination.
+                We help established Detailing studios who sell PPF and ceramic coating attract serious car owners, qualify enquiries, and turn them into showroom visits through targeted ads, structured follow-ups, and appointment coordination.
               </p>
 
               {/* Primary & Secondary CTAs */}

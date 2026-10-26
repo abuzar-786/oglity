@@ -248,34 +248,25 @@ export const FounderSection: React.FC<FounderSectionProps> = () => {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* =========================================================
-            1. SECTION HEADLINE & INTRO
+            1. SECTION EYEBROW
            ========================================================= */}
-        <div className="max-w-3xl mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#16191C] border border-[#252A2E] rounded-[4px] mb-3">
+        <div className="mb-6 sm:mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#16191C] border border-[#252A2E] rounded-[4px]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#C7F000]" />
             <span className="text-xs font-mono font-bold tracking-wider text-[#C7F000] uppercase">
               THE PERSON BEHIND OGLITY
             </span>
           </div>
-
-          <h2 className="font-['Manrope',sans-serif] font-extrabold text-3xl sm:text-4xl lg:text-5xl tracking-tight text-[#F1F0EC] leading-[1.12]">
-            Your Craft Is Car Protection.{' '}
-            <span className="text-[#C7F000]">Mine Is Customer Acquisition.</span>
-          </h2>
-
-          <p className="mt-3.5 text-sm sm:text-base text-[#B8BEC4] font-sans leading-relaxed">
-            I'm Abuzar Gaur, founder of Oglity. Having worked with 6 car detailing and protection businesses, I've focused my work on helping studios attract more relevant enquiries and turn customer interest into real sales opportunities.
-          </p>
         </div>
 
         {/* =========================================================
             2. FOUNDER TWO-COLUMN STORY
            ========================================================= */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-          {/* LEFT: Large Authentic Founder Portrait */}
-          <div className="lg:col-span-5 w-full">
-            <div className="relative group w-full max-w-md mx-auto lg:max-w-none">
-              <div className="relative aspect-[4/5] w-full rounded-[6px] overflow-hidden border border-[#252A2E] bg-[#16191C] shadow-[0_16px_40px_rgba(0,0,0,0.6)]">
+          {/* LEFT: Authentic Founder Portrait - Compact Sizing */}
+          <div className="lg:col-span-4 w-full flex justify-center lg:justify-start">
+            <div className="relative group w-full max-w-[260px] sm:max-w-[290px] lg:max-w-[310px]">
+              <div className="relative aspect-[4/5] max-h-[380px] w-full rounded-[6px] overflow-hidden border border-[#252A2E] bg-[#16191C] shadow-[0_12px_32px_rgba(0,0,0,0.5)]">
                 <img
                   src={photoSrc}
                   alt="Abuzar Gaur - Founder, Oglity"
@@ -286,11 +277,11 @@ export const FounderSection: React.FC<FounderSectionProps> = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#111315]/85 via-transparent to-transparent pointer-events-none" />
 
                 {/* Lower tag overlay */}
-                <div className="absolute bottom-0 inset-x-0 p-4 sm:p-5 pointer-events-none">
-                  <div className="font-['Manrope',sans-serif] font-bold text-base sm:text-lg text-[#F1F0EC] leading-tight">
+                <div className="absolute bottom-0 inset-x-0 p-3.5 sm:p-4 pointer-events-none">
+                  <div className="font-['Manrope',sans-serif] font-bold text-sm sm:text-base text-[#F1F0EC] leading-tight">
                     Abuzar Gaur
                   </div>
-                  <div className="text-xs font-mono text-[#C7F000] font-semibold mt-0.5 uppercase tracking-wider">
+                  <div className="text-[11px] font-mono text-[#C7F000] font-semibold mt-0.5 uppercase tracking-wider">
                     Founder, Oglity
                   </div>
                 </div>
@@ -300,7 +291,7 @@ export const FounderSection: React.FC<FounderSectionProps> = () => {
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   title="Update photo"
-                  className="absolute top-3 right-3 p-1.5 rounded-[4px] bg-[#111315]/80 hover:bg-[#16191C] border border-[#252A2E] hover:border-[#C7F000] text-[#B8BEC4] hover:text-[#C7F000] opacity-0 group-hover:opacity-100 transition-all cursor-pointer"
+                  className="absolute top-2.5 right-2.5 p-1.5 rounded-[4px] bg-[#111315]/80 hover:bg-[#16191C] border border-[#252A2E] hover:border-[#C7F000] text-[#B8BEC4] hover:text-[#C7F000] opacity-0 group-hover:opacity-100 transition-all cursor-pointer"
                   aria-label="Change photo"
                 >
                   <Camera className="w-3.5 h-3.5" />
@@ -310,16 +301,11 @@ export const FounderSection: React.FC<FounderSectionProps> = () => {
           </div>
 
           {/* RIGHT: Founder Message & Beliefs */}
-          <div className="lg:col-span-7 space-y-4 sm:space-y-5">
-            <div className="inline-flex items-center gap-2 text-xs font-mono tracking-wider text-[#C7F000] font-bold uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#C7F000]" />
-              <span>THE PERSON BEHIND OGLITY</span>
-            </div>
-
-            <h3 className="font-['Manrope',sans-serif] font-extrabold text-2xl sm:text-3xl text-[#F1F0EC] tracking-tight leading-tight">
+          <div className="lg:col-span-8 space-y-4 sm:space-y-5">
+            <h2 className="font-['Manrope',sans-serif] font-extrabold text-2xl sm:text-3xl text-[#F1F0EC] tracking-tight leading-tight">
               Your Craft Is Car Protection.{' '}
               <span className="text-[#C7F000]">Mine Is Customer Acquisition.</span>
-            </h3>
+            </h2>
 
             <div className="space-y-3.5 text-xs sm:text-sm text-[#B8BEC4] font-sans leading-relaxed">
               <p className="text-sm sm:text-base text-[#F1F0EC] font-semibold">
@@ -373,30 +359,30 @@ export const FounderSection: React.FC<FounderSectionProps> = () => {
         {/* =========================================================
             3. PHOTO CARDS: SINGLE ROW MOVING LEFT TO RIGHT (Marquee-LTR)
            ========================================================= */}
-        <div className="mt-14 sm:mt-18 pt-10 border-t border-[#252A2E]">
+        <div className="mt-10 sm:mt-14 pt-7 border-t border-[#252A2E]">
           {/* Marquee Viewport with Edge Gradients */}
-          <div className="relative -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 overflow-hidden py-2">
+          <div className="relative -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 overflow-hidden py-1.5">
             {/* Edge Gradients for Smooth In/Out Fading */}
             <div className="pointer-events-none absolute inset-y-0 left-0 w-8 sm:w-16 lg:w-24 bg-gradient-to-r from-[#111315] via-[#111315]/80 to-transparent z-10" />
             <div className="pointer-events-none absolute inset-y-0 right-0 w-8 sm:w-16 lg:w-24 bg-gradient-to-l from-[#111315] via-[#111315]/80 to-transparent z-10" />
 
             {/* Left to Right Animated Row */}
-            <div className="animate-marquee-ltr gap-4 sm:gap-5 py-2">
+            <div className="animate-marquee-ltr gap-3 sm:gap-4 py-1.5">
               {[...figures, ...figures].map((item, idx) => (
                 <div
                   key={`${item.id}-${idx}`}
-                  className="w-[220px] sm:w-[250px] md:w-[275px] shrink-0 bg-[#16191C] border border-[#252A2E] hover:border-[#C7F000]/50 rounded-[8px] overflow-hidden p-3 transition-all duration-300 group flex flex-col justify-between"
+                  className="w-[160px] sm:w-[185px] md:w-[205px] shrink-0 bg-[#16191C] border border-[#252A2E] hover:border-[#C7F000]/50 rounded-[7px] overflow-hidden p-2 sm:p-2.5 transition-all duration-300 group flex flex-col justify-between"
                 >
-                  {/* Image: 9/16 Aspect Ratio */}
-                  <div className="relative aspect-[9/16] w-full rounded-[6px] overflow-hidden border border-[#252A2E] bg-[#111315]">
+                  {/* Image: Compact Balanced Aspect Ratio */}
+                  <div className="relative aspect-[3/4] w-full rounded-[5px] overflow-hidden border border-[#252A2E] bg-[#111315]">
                     <img
                       src={item.image}
                       alt={`${item.name} - ${item.role}`}
                       className="w-full h-full object-cover object-top filter contrast-[1.03] transition-all duration-300 group-hover:scale-[1.02]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#111315]/80 via-transparent to-transparent pointer-events-none" />
-                    <div className="absolute top-2 left-2 pointer-events-none">
-                      <span className="text-[9px] sm:text-[10px] font-mono text-[#C7F000] bg-[#111315]/90 border border-[#252A2E] px-1.5 sm:px-2 py-0.5 rounded-[3px] font-bold tracking-wider uppercase">
+                    <div className="absolute top-1.5 left-1.5 pointer-events-none">
+                      <span className="text-[8px] sm:text-[9px] font-mono text-[#C7F000] bg-[#111315]/90 border border-[#252A2E] px-1 sm:px-1.5 py-0.5 rounded-[2px] font-bold tracking-wider uppercase">
                         {item.tag}
                       </span>
                     </div>
@@ -410,10 +396,10 @@ export const FounderSection: React.FC<FounderSectionProps> = () => {
                           anandFileInputRef.current?.click();
                         }}
                         title="Update photo"
-                        className="absolute top-2 right-2 p-1 rounded-[4px] bg-[#111315]/80 hover:bg-[#16191C] border border-[#252A2E] hover:border-[#C7F000] text-[#B8BEC4] hover:text-[#C7F000] opacity-0 group-hover:opacity-100 transition-all cursor-pointer z-20"
+                        className="absolute top-1.5 right-1.5 p-1 rounded-[3px] bg-[#111315]/80 hover:bg-[#16191C] border border-[#252A2E] hover:border-[#C7F000] text-[#B8BEC4] hover:text-[#C7F000] opacity-0 group-hover:opacity-100 transition-all cursor-pointer z-20"
                         aria-label="Change photo"
                       >
-                        <Camera className="w-3 h-3" />
+                        <Camera className="w-2.5 h-2.5" />
                       </button>
                     )}
                     {'isAshneer' in item && item.isAshneer && (
@@ -424,10 +410,10 @@ export const FounderSection: React.FC<FounderSectionProps> = () => {
                           ashneerFileInputRef.current?.click();
                         }}
                         title="Update photo"
-                        className="absolute top-2 right-2 p-1 rounded-[4px] bg-[#111315]/80 hover:bg-[#16191C] border border-[#252A2E] hover:border-[#C7F000] text-[#B8BEC4] hover:text-[#C7F000] opacity-0 group-hover:opacity-100 transition-all cursor-pointer z-20"
+                        className="absolute top-1.5 right-1.5 p-1 rounded-[3px] bg-[#111315]/80 hover:bg-[#16191C] border border-[#252A2E] hover:border-[#C7F000] text-[#B8BEC4] hover:text-[#C7F000] opacity-0 group-hover:opacity-100 transition-all cursor-pointer z-20"
                         aria-label="Change photo"
                       >
-                        <Camera className="w-3 h-3" />
+                        <Camera className="w-2.5 h-2.5" />
                       </button>
                     )}
                     {'isBhargava' in item && item.isBhargava && (
@@ -438,25 +424,25 @@ export const FounderSection: React.FC<FounderSectionProps> = () => {
                           bhargavaFileInputRef.current?.click();
                         }}
                         title="Update photo"
-                        className="absolute top-2 right-2 p-1 rounded-[4px] bg-[#111315]/80 hover:bg-[#16191C] border border-[#252A2E] hover:border-[#C7F000] text-[#B8BEC4] hover:text-[#C7F000] opacity-0 group-hover:opacity-100 transition-all cursor-pointer z-20"
+                        className="absolute top-1.5 right-1.5 p-1 rounded-[3px] bg-[#111315]/80 hover:bg-[#16191C] border border-[#252A2E] hover:border-[#C7F000] text-[#B8BEC4] hover:text-[#C7F000] opacity-0 group-hover:opacity-100 transition-all cursor-pointer z-20"
                         aria-label="Change photo"
                       >
-                        <Camera className="w-3 h-3" />
+                        <Camera className="w-2.5 h-2.5" />
                       </button>
                     )}
                   </div>
 
                   {/* Below Every Column: Name & Details */}
-                  <div className="mt-3 pt-2.5 border-t border-[#252A2E] space-y-1">
-                    <div className="flex items-center justify-between gap-1.5">
-                      <div className="font-['Manrope',sans-serif] font-bold text-sm sm:text-base text-[#F1F0EC] tracking-tight group-hover:text-[#C7F000] transition-colors truncate">
+                  <div className="mt-2 pt-1.5 border-t border-[#252A2E] space-y-0.5">
+                    <div className="flex items-center justify-between gap-1">
+                      <div className="font-['Manrope',sans-serif] font-bold text-xs sm:text-[13px] text-[#F1F0EC] tracking-tight group-hover:text-[#C7F000] transition-colors truncate">
                         {item.name}
                       </div>
-                      <span className="text-[10px] sm:text-[11px] font-mono text-[#C7F000] font-semibold shrink-0">
+                      <span className="text-[9px] sm:text-[10px] font-mono text-[#C7F000] font-semibold shrink-0">
                         {item.role}
                       </span>
                     </div>
-                    <p className="text-[11px] sm:text-xs text-[#B8BEC4] font-sans leading-relaxed line-clamp-2">
+                    <p className="text-[10px] sm:text-[11px] text-[#B8BEC4] font-sans leading-snug line-clamp-2">
                       {item.context}
                     </p>
                   </div>

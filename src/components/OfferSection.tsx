@@ -9,7 +9,7 @@ export const OfferSection: React.FC<OfferSectionProps> = ({ onApplyClick }) => {
   const [isTermsExpanded, setIsTermsExpanded] = useState(false);
 
   const eligibility = [
-    'Established premium PPF or ceramic coating studio',
+    'Established premium Detailing studio who sell PPF & ceramic coating',
     'Preferably ₹5L+ monthly revenue',
     'Capacity for additional premium customers',
     'Ready to invest consistently in growth',
