@@ -156,14 +156,6 @@ export const FounderSection: React.FC<FounderSectionProps> = () => {
 
   const figures = [
     {
-      id: 'fig-1',
-      name: 'Kunal Shah',
-      role: 'Founder, CRED',
-      context: 'Founder conversation • High-ticket consumer acquisition & premium behavioral psychology',
-      image: '/images/founder_strategy.jpg',
-      tag: 'FOUNDER CONVERSATION',
-    },
-    {
       id: 'fig-2',
       name: 'Anand Mahindra',
       role: 'CEO of Mahindra Group',

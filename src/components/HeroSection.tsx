@@ -103,10 +103,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <div className="p-3 sm:p-5 bg-[#16191C] border border-[#252A2E] rounded-[6px] hover:border-[#B8BEC4]/40 transition-colors flex flex-col justify-between">
                 <div>
                   <div className="font-['Space_Grotesk',sans-serif] font-extrabold text-2xl sm:text-3xl lg:text-4xl text-[#C7F000] tracking-tight leading-none">
-                    300+
+                    600+
                   </div>
                   <div className="mt-1 sm:mt-2 font-['Inter',sans-serif] font-bold text-[11px] sm:text-xs lg:text-sm text-[#F1F0EC] uppercase tracking-wider leading-snug">
-                    Physical Showroom Visits
+                    Physical Studio Visits
                   </div>
                 </div>
                 <p className="mt-1 text-[10px] sm:text-xs text-[#B8BEC4] font-sans">

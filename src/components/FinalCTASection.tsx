@@ -244,11 +244,8 @@ export const FinalCTASection: React.FC = () => {
             </div>
 
             {/* Microcopy & Reassurance Footer */}
-            <div className="mt-4 pt-3.5 border-t border-[#252A2E] text-center space-y-1">
-              <p className="text-xs sm:text-[13px] text-[#F1F0EC] font-sans font-medium">
-                30-minute discovery call · No obligation · For established PPF and ceramic coating studios.
-              </p>
-              <p className="text-[11px] text-[#7E8876] font-sans">
+            <div className="mt-4 pt-3.5 border-t border-[#252A2E] text-center">
+              <p className="text-xs text-[#7E8876] font-sans">
                 Direct conversation with founder Abuzar Gaur. No aggressive sales pressure.
               </p>
             </div>
