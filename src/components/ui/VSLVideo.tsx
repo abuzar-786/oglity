@@ -314,33 +314,26 @@ export const VSLVideo: React.FC<VSLVideoProps> = ({
             </svg>
           </div>
 
-          {/* Telemetry Badges */}
-          <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-20 flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[2px] bg-[#111315]/85 border border-[#252A2E] text-[10px] sm:text-[11px] font-['Space_Grotesk',sans-serif] font-bold text-[#F1F0EC] tracking-wider backdrop-blur-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-              <span>REC // 4K 60FPS</span>
-            </span>
-            <span className="hidden sm:inline-flex px-2 py-0.5 rounded-[2px] bg-[#111315]/85 border border-[#252A2E] text-[10px] font-['Space_Grotesk',sans-serif] text-[#C7F000] tracking-wider backdrop-blur-sm">
-              PPF &bull; CERAMIC VSL
-            </span>
-          </div>
+          {/* Center Curiosity Card & Play Trigger (Only Main Headline + Play Button) */}
+          <div className="relative z-30 max-w-lg mx-auto px-4 text-center flex flex-col items-center justify-center">
+            {/* Core Curiosity Headline */}
+            <h3 className="font-['Manrope',sans-serif] font-extrabold text-base sm:text-xl md:text-2xl lg:text-[26px] text-[#F1F0EC] tracking-tight leading-[1.25] drop-shadow-md">
+              Enquiries Aa Rahi Hain.{' '}
+              <span className="text-[#C7F000] block sm:inline">Bookings Kahan Kho Rahi Hain?</span>
+            </h3>
 
-          <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20">
-            <span className="px-2 py-0.5 rounded-[2px] bg-[#111315]/85 border border-[#252A2E] text-[10px] sm:text-[11px] font-mono text-[#B8BEC4] tracking-wider backdrop-blur-sm">
-              AQBC™ SYSTEM
-            </span>
-          </div>
-
-          <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-20 hidden sm:flex items-center gap-2">
-            <span className="text-[10px] font-['Space_Grotesk',sans-serif] tracking-wider text-[#B8BEC4]/90 uppercase">
-              OGLITY ACQUISITION ENGINE // SHOWROOM WALKTHROUGH
-            </span>
+            {/* Clean Play Button Trigger */}
+            <div className="mt-4 sm:mt-5 flex items-center justify-center">
+              <div className="relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#C7F000] text-[#111315] shadow-[0_0_30px_rgba(199,240,0,0.5)] group-hover:scale-110 group-hover:bg-[#D5FA10] transition-transform duration-200">
+                <Play className="w-5 h-5 sm:w-6 sm:h-6 fill-[#111315] translate-x-0.5" />
+              </div>
+            </div>
           </div>
         </div>
       )}
 
-      {/* Center Play Button Overlay (Visible when paused) */}
-      {!isPlaying && (
+      {/* Center Play Button Overlay (Visible when paused after having started) */}
+      {!isPlaying && hasStartedPlaying && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-[1px] z-20 transition-opacity pointer-events-none">
           <div className="relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full bg-[#C7F000] text-[#111315] shadow-[0_0_35px_rgba(199,240,0,0.5)] transition-transform duration-200 group-hover:scale-110">
             <Play className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 fill-[#111315] translate-x-0.5" />
