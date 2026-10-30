@@ -99,7 +99,7 @@ export const OfferSection: React.FC<OfferSectionProps> = ({ onApplyClick }) => {
               <div className="flex items-center gap-2 pb-2 mb-2.5 border-b border-[#1E2E23]">
                 <CheckCircle2 className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#C7F000] shrink-0" />
                 <h3 className="font-['Manrope',sans-serif] font-bold text-sm sm:text-base text-[#F1F0EC] tracking-tight">
-                  Good Fit
+                  This is for
                 </h3>
               </div>
 
@@ -124,7 +124,7 @@ export const OfferSection: React.FC<OfferSectionProps> = ({ onApplyClick }) => {
               <div className="flex items-center gap-2 pb-2 mb-2.5 border-b border-[#2F1F24]">
                 <XCircle className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-[#E57373] shrink-0" />
                 <h3 className="font-['Manrope',sans-serif] font-bold text-sm sm:text-base text-[#F1F0EC] tracking-tight">
-                  Not a Fit
+                  This is not for
                 </h3>
               </div>
 
