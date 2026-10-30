@@ -218,7 +218,7 @@ export const FinalCTASection: React.FC = () => {
             <div className="w-full rounded-[10px] overflow-hidden bg-[#111315] border border-[#252A2E]">
               <div
                 className="calendly-inline-widget w-full"
-                data-url="https://calendly.com/abuzargour1188/30min?month=2026-10"
+                data-url="https://calendly.com/abuzargour1188/30min"
                 style={{ minWidth: '100%', height: '780px' }}
               />
             </div>

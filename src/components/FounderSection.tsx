@@ -51,14 +51,14 @@ export const FounderSection: React.FC<FounderSectionProps> = () => {
           </div>
 
           {/* TESTIMONIAL VIDEO CARD */}
-          <div className="bg-[#15181B] border border-[#252A2E] rounded-[16px] p-3.5 sm:p-4 shadow-lg flex flex-col justify-between">
-            <div className="text-xs font-mono font-bold tracking-wider text-[#C7F000] uppercase mb-2 sm:mb-2.5 flex items-center gap-2">
+          <div className="bg-[#15181B] border border-[#252A2E] rounded-[16px] p-3.5 sm:p-4 shadow-lg flex flex-col justify-between items-center">
+            <div className="w-full text-xs font-mono font-bold tracking-wider text-[#C7F000] uppercase mb-2 sm:mb-2.5 flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#C7F000]" />
               FEATURED CLIENT TESTIMONIAL
             </div>
 
-            {/* Responsive 9:16 Video Player aligned with video aspect ratio */}
-            <div className="relative w-full max-w-[320px] sm:max-w-[340px] mx-auto aspect-[9/16] rounded-[12px] overflow-hidden bg-black border border-[#252A2E] shadow-xl">
+            {/* Compact 9:16 Video Player */}
+            <div className="relative w-full max-w-[170px] sm:max-w-[195px] md:max-w-[210px] mx-auto aspect-[9/16] rounded-[12px] overflow-hidden bg-black border border-[#252A2E] shadow-xl">
               <iframe
                 src="https://fast.wistia.net/embed/iframe/9wde5hgyei"
                 title="Featured Client Testimonial Video"

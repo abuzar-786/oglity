@@ -97,7 +97,7 @@ export const GrowthAuditModal: React.FC<GrowthAuditModalProps> = ({ isOpen, onCl
                   Schedule Your Private Growth Audit
                 </h3>
                 <p className="text-xs sm:text-sm text-[#B8BEC4] mt-1.5 font-sans leading-relaxed">
-                  We'll examine your territory's PPF &amp; Ceramic search demand and map out an exact roadmap to add 20+ confirmed showroom inspections monthly.
+                  We'll examine your territory's PPF &amp; Ceramic search demand and map out an exact acquisition roadmap for your studio.
                 </p>
               </div>
 
@@ -212,7 +212,7 @@ export const GrowthAuditModal: React.FC<GrowthAuditModalProps> = ({ isOpen, onCl
                 <div className="p-3 bg-[#252A2E]/40 border border-[#252A2E] rounded-[4px] text-xs font-sans text-[#B8BEC4] flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-[#C7F000] shrink-0" />
                   <span>
-                    Zero commitment. If we cannot add at least 15 high-ticket bookings in your city, we'll tell you upfront.
+                    Zero commitment. If we determine our customer acquisition system is not the right fit for your studio, we'll tell you upfront.
                   </span>
                 </div>
 

@@ -42,9 +42,9 @@ export const StickyConversionBar: React.FC<StickyConversionBarProps> = ({ onBook
         <div className="flex flex-col min-w-0">
           <div className="flex items-center gap-1.5 truncate">
             <span className="w-1.5 h-1.5 rounded-full bg-[#C7F000]" />
-            <span className="text-xs font-bold text-[#F1F0EC] truncate">15 Opportunities / Mo</span>
+            <span className="text-xs font-bold text-[#F1F0EC] truncate">Studio Leakage Analysis</span>
           </div>
-          <span className="text-[10px] text-[#B8BEC4] truncate">15-min qualification call</span>
+          <span className="text-[10px] text-[#CAD0D6] truncate">Free 30-min studio fit call</span>
         </div>
 
         <Button
@@ -54,7 +54,7 @@ export const StickyConversionBar: React.FC<StickyConversionBarProps> = ({ onBook
           icon={<ArrowUpRight className="w-3.5 h-3.5 text-[#111315]" />}
           className="!h-9 !py-1 !px-3.5 text-[11px] font-bold shrink-0 tracking-tight"
         >
-          SEE IF YOUR STUDIO QUALIFIES →
+          BOOK FREE ANALYSIS →
         </Button>
       </div>
     </aside>

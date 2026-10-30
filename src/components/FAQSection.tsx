@@ -24,7 +24,7 @@ export const FAQSection: React.FC = () => {
     {
       question: "What if the 20-visit target isn't achieved?",
       answer:
-        'Following an initial 14-day testing phase, if the monthly commitment of 20 qualified visits is not reached, we extend your campaign for 15–30 additional days with no extra agency management fees, subject to written agreement. Client-funded advertising continues separately.',
+        'Our conditional commitment is for 20 qualified, physically attended showroom visits each month, which begins following an initial 14-day testing period. If this target is not reached, we extend your campaign for 15–30 additional days without extra agency management fees, determined on a case-by-case basis. Client-funded advertising continues separately during any extension phase, subject to studio cooperation, attendance verification, and written agreement terms.',
     },
     {
       question: 'Do you guarantee PPF sales or revenue?',
