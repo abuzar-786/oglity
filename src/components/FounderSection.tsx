@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import { UserCheck, Play, MessageCircle } from 'lucide-react';
+import React from 'react';
+import { UserCheck, MessageCircle } from 'lucide-react';
 
 interface FounderSectionProps {
   onExploreSystem?: () => void;
 }
 
 export const FounderSection: React.FC<FounderSectionProps> = () => {
-  const [isPlayingVideo, setIsPlayingVideo] = useState(false);
-
   return (
     <section
       id="results"
@@ -59,38 +57,15 @@ export const FounderSection: React.FC<FounderSectionProps> = () => {
               FEATURED CLIENT TESTIMONIAL
             </div>
 
-            {/* Responsive 16:9 Video Player */}
-            <div className="relative w-full aspect-video rounded-[10px] overflow-hidden bg-black border border-[#252A2E] shadow-md">
-              {isPlayingVideo ? (
-                <iframe
-                  src="https://www.youtube-nocookie.com/embed/IQzREQoHUhM?autoplay=1&controls=1&rel=0&modestbranding=1&playsinline=1"
-                  title="Featured Client Testimonial Video"
-                  className="w-full h-full border-0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setIsPlayingVideo(true)}
-                  className="w-full h-full relative cursor-pointer group block text-left"
-                  aria-label="Play client testimonial video"
-                >
-                  <img
-                    src="/images/detailing_mercedes_s_class.jpg"
-                    alt="Featured client testimonial video showing luxury car detailing bay"
-                    className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
-
-                  {/* Clean Centered Play Button */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-13 h-13 sm:w-15 sm:h-15 rounded-full bg-[#C7F000] text-[#111315] flex items-center justify-center shadow-[0_0_20px_rgba(199,240,0,0.4)] group-hover:scale-110 group-hover:bg-[#D5FA10] transition-all">
-                      <Play className="w-6 h-6 sm:w-7 sm:h-7 fill-current translate-x-0.5" />
-                    </div>
-                  </div>
-                </button>
-              )}
+            {/* Responsive 9:16 Video Player aligned with video aspect ratio */}
+            <div className="relative w-full max-w-[320px] sm:max-w-[340px] mx-auto aspect-[9/16] rounded-[12px] overflow-hidden bg-black border border-[#252A2E] shadow-xl">
+              <iframe
+                src="https://fast.wistia.net/embed/iframe/9wde5hgyei"
+                title="Featured Client Testimonial Video"
+                className="w-full h-full border-0"
+                allow="autoplay; fullscreen"
+                allowFullScreen
+              />
             </div>
           </div>
         </div>

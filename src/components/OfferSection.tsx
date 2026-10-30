@@ -45,7 +45,7 @@ export const OfferSection: React.FC<OfferSectionProps> = ({ onApplyClick }) => {
     },
     {
       title: '15–30 Day Remedy Extension',
-      text: 'If the 15-visit target is not achieved, campaigns extend for 15–30 days with no extra agency management fees. Duration is determined case by case and documented in writing.',
+      text: 'If the 20-visit target is not achieved, campaigns extend for 15–30 days with no extra agency management fees. Duration is determined case by case and documented in writing.',
     },
     {
       title: 'Advertising Continuity',
@@ -152,10 +152,10 @@ export const OfferSection: React.FC<OfferSectionProps> = ({ onApplyClick }) => {
             THE OGLITY COMMITMENT
           </div>
 
-          {/* Commitment Core: Large 15 Number + Heading */}
+          {/* Commitment Core: Large 20 Number + Heading */}
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 pb-3.5 border-b border-[#252A2E]">
             <div className="font-['Space_Grotesk',sans-serif] font-extrabold text-5xl sm:text-6xl text-[#C7F000] leading-none shrink-0 tracking-tight">
-              15
+              20
             </div>
 
             <div className="min-w-0">
